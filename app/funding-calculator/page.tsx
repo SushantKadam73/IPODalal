@@ -471,6 +471,11 @@ export default function FundingCalculator() {
                         'discount' in categoryDetails && 
                         categoryDetails.discount !== undefined;
 
+    // Get the actual application value regardless of selection state
+    const applicationValue = ipoApplications[ipo.id]?.[category] || 0;
+    const lots = calculateLotsForCategory(ipo, category);
+    const value = lots * ipo.lotSize * ipo.price;
+
     return (
       <div className={containerClassName}>
         <Label htmlFor={`${ipo.id}-${category}`} className="text-sm flex justify-between">
@@ -499,8 +504,8 @@ export default function FundingCalculator() {
           <Input
             id={`${ipo.id}-${category}`}
             type="number"
-            className="h-7 rounded-none text-center text-xs"
-            value={ipoApplications[ipo.id]?.[category] || 0}
+            className="h-7 rounded-none text-center text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            value={applicationValue}
             onChange={(e) => updateApplications(ipo.id, category, Number.parseInt(e.target.value) || 0)}
             min={0}
             max={ipo.categoryDetails[typedCategory].maxApplications}
@@ -521,12 +526,9 @@ export default function FundingCalculator() {
           </Button>
         </div>
         <div className="grid grid-cols-2 gap-1 text-xs text-muted-foreground">
-          <div>Lots: {isSelected ? calculateLotsForCategory(ipo, category) : 0}</div>
+          <div>Lots: {lots}</div>
           <div>
-            Value:{" "}
-            {formatIndianCurrency(
-              isSelected ? calculateLotsForCategory(ipo, category) * ipo.lotSize * ipo.price : 0
-            )}
+            Value: {formatIndianCurrency(value)}
           </div>
         </div>
       </div>
@@ -552,26 +554,78 @@ export default function FundingCalculator() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="interestRate">Interest Rate (% per annum)</Label>
-              <Input
-                id="interestRate"
-                type="number"
-                value={interestRate}
-                onChange={(e) => setInterestRate(Number.parseFloat(e.target.value) || 0)}
-                min={0}
-                step={0.1}
-                className="focus-visible:ring-primary"
-              />
+              <div className="flex items-center">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="h-9 w-9 rounded-r-none"
+                  onClick={() => {
+                    if (interestRate > 0.1) {
+                      setInterestRate(Number((interestRate - 0.1).toFixed(1)))
+                    }
+                  }}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <Input
+                  id="interestRate"
+                  type="number"
+                  value={interestRate}
+                  onChange={(e) => setInterestRate(Number.parseFloat(e.target.value) || 0)}
+                  min={0}
+                  step={0.1}
+                  className="rounded-none text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:ring-primary"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="h-9 w-9 rounded-l-none"
+                  onClick={() => {
+                    setInterestRate(Number((interestRate + 0.1).toFixed(1)))
+                  }}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="loanPeriod">Loan Period (Days)</Label>
-              <Input
-                id="loanPeriod"
-                type="number"
-                value={loanPeriod}
-                onChange={(e) => setLoanPeriod(Number.parseInt(e.target.value) || 0)}
-                min={1}
-                className="focus-visible:ring-primary"
-              />
+              <div className="flex items-center">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="h-9 w-9 rounded-r-none"
+                  onClick={() => {
+                    if (loanPeriod > 1) {
+                      setLoanPeriod(loanPeriod - 1)
+                    }
+                  }}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <Input
+                  id="loanPeriod"
+                  type="number"
+                  value={loanPeriod}
+                  onChange={(e) => setLoanPeriod(Number.parseInt(e.target.value) || 0)}
+                  min={1}
+                  className="rounded-none text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:ring-primary"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="h-9 w-9 rounded-l-none"
+                  onClick={() => {
+                    setLoanPeriod(loanPeriod + 1)
+                  }}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -790,7 +844,7 @@ export default function FundingCalculator() {
             {/* Overall Summary */}
             <div>
               <h3 className="text-lg font-semibold mb-4 text-foreground">Overall Summary</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <Card className="border border-border/40">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm">Total Investment</CardTitle>
@@ -823,14 +877,6 @@ export default function FundingCalculator() {
                     <p className="text-2xl font-bold text-secondary">{formatIndianCurrency(overallSummary.totalCost)}</p>
                   </CardContent>
                 </Card>
-                <Card className="border border-border/40">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Total Lots Applied</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-2xl font-bold text-primary">{overallSummary.totalLotsApplied}</p>
-                  </CardContent>
-                </Card>
               </div>
             </div>
 
@@ -842,7 +888,7 @@ export default function FundingCalculator() {
               return (
                 <div key={ipoId} className="border-t pt-6">
                   <h3 className="text-lg font-semibold mb-4 text-foreground">{ipo.name}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
                     <Card className="border border-border/40">
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm">Investment Amount</CardTitle>
