@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Github, Twitter } from "lucide-react"
+import { Github, Twitter, Send } from "lucide-react"
 
 export function Footer() {
   return (
@@ -25,6 +25,14 @@ export function Footer() {
             >
               <Twitter className="h-5 w-5" />
               <span className="sr-only">Twitter</span>
+            </Link>
+            <Link
+              href="https://t.me/ipodalal"
+              target="_blank"
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <Send className="h-5 w-5" />
+              <span className="sr-only">Telegram</span>
             </Link>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">

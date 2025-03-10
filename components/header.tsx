@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { TrendingUp, Github, Twitter } from "lucide-react"
+import { TrendingUp, Github, Twitter, Send } from "lucide-react"
 
 const navItems = [
   { name: "Dashboard", href: "/" },
@@ -50,6 +50,11 @@ export function Header() {
           <Button variant="outline" size="icon" asChild className="hidden md:flex">
             <Link href="https://x.com/Sushant_Kadam73" target="_blank" aria-label="Twitter">
               <Twitter className="h-5 w-5" />
+            </Link>
+          </Button>
+          <Button variant="outline" size="icon" asChild className="hidden md:flex">
+            <Link href="https://t.me/ipodalal" target="_blank" aria-label="Telegram">
+              <Send className="h-5 w-5" />
             </Link>
           </Button>
           <Button variant="outline" size="icon" className="md:hidden">
