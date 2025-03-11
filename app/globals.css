@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 175 65% 45%; /* #28bdb3 */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 343 42% 47%; /* #AB4565 */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 343 42% 47%; /* #AB4565 */
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 175 65% 45%; /* #28bdb3 */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 8.2%; /* #151515 */
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 11%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 8.2%; /* #151515 */
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 175 65% 45%; /* #28bdb3 */
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 343 42% 47%; /* #AB4565 */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 343 42% 47%; /* #AB4565 */
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 175 65% 45%; /* #28bdb3 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-lexend dark:bg-[#151515];
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-josefin text-primary;
+  }
+}
+
+/* Custom utility for Indian currency format */
+.rupee::before {
+  content: "₹";
+  margin-right: 0.1rem;
+}
+
+/* Custom shadow for tables as per design spec */
+.shadow-hard {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* Custom styles for the funding calculator */
+.ipo-card {
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.ipo-card:hover {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ipo-card.selected {
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--primary) / 0.05);
+}
+
+.category-input {
+  transition: all 0.2s ease;
+}
+
+.category-input:not(.disabled):hover {
+  border-color: hsl(var(--primary));
+}
+
