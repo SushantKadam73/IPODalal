@@ -10,7 +10,6 @@ import { TrendingUp, Github, Twitter, Send } from "lucide-react"
 const navItems = [
   { name: "Dashboard", href: "/" },
   { name: "Funding Calculator", href: "/funding-calculator" },
-  { name: "Allocation Optimizer", href: "/allocation-optimizer" },
   { name: "Docs", href: "/docs" },
 ]
 
