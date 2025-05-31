@@ -1,0 +1,1323 @@
+# IPO Dalal Project Documentation: Project Structure
+
+**File Description:** This document provides a comprehensive overview of the IPO Dalal project, outlining its goals, inspiration, features, and overall structure.
+
+---
+
+## 1. Project Overview
+
+IPO Dalal is an IPO Tracking project designed to be a one-stop platform for comprehensive information and analysis related to Initial Public Offerings (IPOs). It aims to provide users with valuable insights into upcoming, current, and past IPOs in the Indian stock market, catering to both Mainboard and SME IPOs.
+
+**Inspiration and Data Sources:**
+
+The project draws inspiration and data from various reputable sources, including:
+
+*   **Official Exchanges & Regulatory Bodies:**
+    *   NSE (National Stock Exchange of India)
+    *   BSE (Bombay Stock Exchange)
+    *   SEBI (Securities and Exchange Board of India)
+*   **IPO Information Aggregator Websites:**
+    *   InvestorGain
+    *   IPO Watch
+    *   IPO Premium
+    *   IPO Central
+    *   Chittorgarh
+    *   IPO Platform
+
+## 2. Key Features
+
+IPO Dalal is envisioned to offer a wide array of features, categorized to provide a user-friendly and informative experience for IPO enthusiasts and investors.
+
+**Core Features:**
+
+1.  **Home Page/Dashboard:**
+    *   Centralized view of upcoming, ongoing, and past Mainboard and SME IPOs presented in tabular format.
+    *   Quick access to key IPO information at a glance.
+
+2.  **Calculator Suite:**
+    *   **Funding Calculator:**
+        *   Calculates the capital required to apply for selected IPOs based on user-defined preferences (categories, lots, etc.).
+        *   Potentially projects expected gains based on basic probability and GMP.
+    *   **Allotment Optimizer:**
+        *   Aids users in optimizing IPO applications based on capital availability and multiple accounts.
+        *   Prioritizes allotment strategies based on GMP, subscription levels, and available capital.
+        *   Advanced features (future): Capital rotation strategies across IPOs within a specific timeframe.
+
+3.  **GMP (Grey Market Premium) Aggregator:**
+    *   Consolidated dashboard displaying GMP, Kostak, and Subject to Sauda rates from diverse sources.
+    *   Visual representation (graphs) of GMP fluctuations and potential manipulation.
+
+4.  **Subscription Aggregator:**
+    *   Aggregated dashboard presenting subscription details across all IPO categories and issues.
+
+5.  **IPO Details Page:**
+    *   Comprehensive information hub for individual IPOs.
+    *   Details encompassing company financials, issue specifics, timelines, and more.
+
+6.  **IPO Performance Analytics:**
+    *   Statistical analysis of IPO performance, including money raised, listing performance, and monthly IPO trends.
+    *   Yearly performance summaries and key IPO metrics.
+
+7.  **My Account/Portfolio:**
+    *   Personalized portfolio to track applied and allotted IPOs.
+    *   Return tracking and application management features.
+    *   Automated allotment status checker.
+    *   Potential future integration for IPO application and bidding functionalities.
+
+8.  **Real-time Comments/Forum:**
+    *   Discussion forum for IPO-specific conversations and company analysis.
+    *   Focus on primary market discussions, unlisted shares, emerging technologies, and companies.
+    *   Emphasis on new and upcoming industries, differentiating from forums focused on established companies.
+
+9.  **Historical Data Analysis:**
+    *   In-depth analysis of historical IPO data.
+    *   Analysis categories: Application category, industry sector, IPO count, lead banker performance, registrar analysis, IPO valuation & size trends, yearly IPO patterns, anchor investor impact, and more.
+
+10. **Good Reads/Cards:**
+    *   Curated collection of relevant news articles, research reports, YouTube videos, tweets, and influencer analysis related to IPOs and the primary market.
+
+11. **About Us:**
+    *   Project introduction, mission statement, vision, development journey, and team information.
+    *   Potential section for advertisement and pricing details.
+
+12. **Documentation (Docs):**
+    *   Project change logs, new feature announcements, navigation guides, and help documentation.
+    *   Version tracking aligned with GitHub releases.
+
+13. **Unlisted Shares Aggregator:**
+    *   Information repository for unlisted companies anticipated to go public soon.
+    *   Real-time updates on companies filing DRHPs with SEBI and listings on NSE SME/BSE SME platforms.
+
+14. **New Issues & Corporate Actions Tracking:**
+    *   Immediate updates on SEBI approvals, DRHP/RHP filings, shareholder quotas, and other critical IPO milestones.
+    *   Potential future expansion to track OFS, Buybacks, Splits, Bonus issues, Bonds, REITs, InvITs, MFs, and SGBs (subject to prioritization).
+
+**Additional Features (Planned):**
+
+*   **Calendar Integration:** IPO Calendar on the Home Page for timeline visibility.
+*   **AI-Powered Summaries:** AI-generated summaries of DRHP, RHP, Basis of Allotment documents, and Research Reports for quick insights.
+*   **Buy/Not Buy Polls:** User voting and polling feature for IPO sentiment analysis.
+*   **Market Dashboard:** Real-time market indicators at the top of the website (Nifty, Bank Nifty, Forex rates, Global Indices, Market Mood Index, P/E ratio, Market Cap).
+*   **Social Media Sharable Images:** Feature to convert IPO data into visually appealing, shareable images for social media platforms.
+*   **Influencer Analysis Cards:** Integration of analysis from prominent financial influencers (YouTube, Twitter, Websites) presented in card format.
+*   **Widget Feature:** Personalized widget to track specific IPOs or companies of interest directly on the home page (requires user login).
+*   **Pre-Open Trade Details:** Information on pre-open trading activity for IPOs.
+
+**Unimportant & Unrelated Additional Features (For future consideration/fun):**
+
+*   **Meme Integration:** Humorous memes displayed alongside subscription meters, triggered by subscription milestones for user engagement.
+
+## 3. Phase 1 Focus
+
+Phase 1 of the IPO Dalal project will concentrate on establishing the foundational elements of the platform. It will include:
+
+*   **Website Structure (4 Pages):**
+    1.  IPO Dashboard/Home Page
+    2.  Funding Calculator
+    3.  Allocation Optimizer (Basic Functionality)
+    4.  Documentation (Docs)
+*   **Data Infrastructure:**
+    *   Development of web scrapers to collect IPO data from target websites.
+    *   Database setup to store and manage the scraped data.
+
+This document outlines the overall vision and scope of the IPO Dalal project. Subsequent documentation will delve into the specifics of Phase 1 implementation, including website structure, scraper design, and database schema.
+
+# IPO Dalal Project Documentation: Phase One - Website Structure
+
+**File Description:** This document details the website structure for Phase One of the IPO Dalal project. It outlines the four core pages and their components planned for the initial release.
+
+---
+
+## Phase 1 Website Structure (4 Pages)
+
+Phase 1 of the IPO Dalal project will consist of four essential pages to provide core functionality.
+
+### 1. IPO Dashboard/Home Page
+
+**Purpose:** To provide a central dashboard for users to view and access information about IPOs across different stages (Ongoing, Upcoming, Past).
+
+**Sections:**
+
+*   **Market Summary (Top of Page):**
+    *   Display key market indicators (Planned for future enhancement, initially may be simple static indicators or placeholders).
+        *   Nifty 50 Value & Change
+        *   Bank Nifty Value & Change
+        *   USD/INR Exchange Rate
+        *   Bitcoin Price (Optional)
+        *   Gold Price (Optional)
+        *   NASDAQ (Optional)
+        *   Market Mood Index/Fear & Greed Index (Optional)
+        *   Nifty P/E Ratio (Optional)
+        *   Total Market Capitalization of Indian Equity Market (Optional)
+
+*   **Calendar (Optional - Phase 1):**
+    *   IPO Calendar view (May be added in Phase 1 or deferred to later phases).
+
+*   **Ongoing IPOs Table:**
+    *   Displays currently active IPOs.
+    *   Columns:
+        *   **Name:** IPO Company Name (with potential emphasis for "Opening Today," "Closing Today" using visual cues like boxes/buttons).
+        *   **Price:** IPO Price Range (₹).
+        *   **GMP:** Grey Market Premium (₹).
+        *   **Subscription Rate:** Overall Subscription Rate (times).
+        *   **Issue Size:** Total Issue Size (₹ Crores).
+        *   **Close Date:** IPO Closing Date.
+        *   **BoA Date:** Basis of Allotment Date.
+        *   **Listing Date:** IPO Listing Date.
+        *   **Status:** Current IPO Status (Ongoing).
+
+*   **Upcoming IPOs Table:**
+    *   Displays IPOs that are yet to open for subscription.
+    *   Columns:
+        *   **Name:** IPO Company Name.
+        *   **Price:** IPO Price Range (₹).
+        *   **GMP:** Grey Market Premium (₹).
+        *   **Issue Size:** Total Issue Size (₹ Crores).
+        *   **Open Date:** IPO Opening Date.
+        *   **Close Date:** IPO Closing Date.
+        *   **BoA Date:** Basis of Allotment Date.
+        *   **Listing Date:** IPO Listing Date.
+
+*   **Past IPOs Table:**
+    *   Displays IPOs that have already closed and been listed.
+    *   Columns:
+        *   **Name:** IPO Company Name.
+        *   **Symbol:** Stock Symbol after listing.
+        *   **Price Range:** IPO Price Range (₹).
+        *   **Issue Size:** Total Issue Size (₹ Crores).
+        *   **Listing Date:** IPO Listing Date.
+        *   **Listing Price:** Listing Price on Exchange (₹).
+        *   **Current Price:** Current Market Price (₹).
+
+### 2. Funding Calculator Page
+
+**Purpose:** To allow users to calculate the capital required for applying to selected IPOs and estimate potential interest costs and expected gains.
+
+**Sections:**
+
+*   **Input Form:**
+    *   **Interest Rate (per annum):** User input for annual interest rate (default: 10%).
+    *   **Loan Period (Days):** User input for loan duration in days (default: 7 days).
+    *   **IPO Selection:**
+        *   Option to select from a list of current/upcoming IPOs (dynamically populated).
+        *   "Custom IPO" option to manually input IPO details if not in the list.
+    *   **IPO Details Input (for each selected IPO or Custom IPO):**
+        *   **Category-wise Application Details:**
+            *   Retail: Number of Lots to Apply
+            *   SHNI: Number of Lots to Apply
+            *   BHNI: Number of Lots to Apply
+            *   Shareholder: Number of Lots to Apply
+            *   Employee: Number of Lots to Apply
+        *   *(Pre-filled data fetched from database when IPO is selected - Share Price, Lot Size, etc.)*
+
+*   **Calculation & Output Display:**
+    *   Dynamically calculated results based on user inputs.
+    *   **For each IPO:**
+        *   Total Investment
+        *   Interest Cost (allocated to the IPO)
+        *   Total Cost
+        *   Shares Applied (per category and total)
+        *   Lots Applied (per category and total)
+        *   Breakeven Price
+    *   **Overall Summary:**
+        *   Total Investment (across all selected IPOs)
+        *   Total Interest Cost (across all selected IPOs)
+        *   Total Cost (across all selected IPOs)
+        *   Capital Requirement Date Range (based on IPO closing dates)
+
+### 3. Allocation Optimizer Page
+
+**Purpose:** (Basic Functionality in Phase 1) To provide a simple tool for users to optimize IPO applications based on limited criteria.
+
+**Sections:**
+
+*   **Input Form:**
+    *   **Available Capital:** User input for total capital available for IPO applications.
+    *   **IPO Selection:** List of current/upcoming IPOs (dynamically populated).
+    *   **Prioritization Criteria:**
+        *   Dropdown or selectable options to prioritize based on:
+            *   GMP
+            *   Subscription Rate
+            *   Capital (Maximize utilization)
+        *   Option to rank the criteria in order of importance.
+
+*   **Output/Recommendation:**
+    *   Suggested IPO allocation strategy based on chosen priorities and available capital.
+    *   *(In Phase 1, this will be a basic recommendation. Advanced optimization will be implemented later.)*
+
+### 4. Docs Page
+
+**Purpose:** To provide project documentation and user assistance.
+
+**Sections:**
+
+*   **Project Features Documentation:**
+    *   Description of existing features in Phase 1.
+*   **Change Log:**
+    *   Version history and updates to the project.
+*   **Future Feature Implementation (Roadmap):**
+    *   Outline of planned features for future phases.
+*   **How to Navigate/Help Guide:**
+    *   Basic instructions on using the website and its features.
+*   **Version Number:**
+    *   Display the current project version number (aligned with GitHub versioning).
+
+
+This document outlines the planned website structure for Phase 1 of the IPO Dalal project. It serves as a blueprint for front-end development and feature implementation in the initial phase.
+
+# IPO Dalal Project Documentation: Phase One - Scraper Documentation
+
+**File Description:** This document details the web scraping strategy for Phase One of the IPO Dalal project. It outlines the target websites, data to be scraped, CSS selectors, and XPath expressions for data extraction.
+
+---
+
+## Phase 1 Scraper Strategy
+
+Phase 1 of the IPO Dalal project involves scraping data from various websites to populate the database and provide real-time IPO information. The primary sources are NSE, BSE, SEBI (indirectly through aggregators), and various IPO information websites.
+
+**Target Websites & Data Points:**
+
+This section details the websites to be scraped and the specific data points to extract from each.
+
+### 1. NSE India (National Stock Exchange of India) -  https://www.nseindia.com/market-data/all-upcoming-issues-ipo
+
+**Purpose:** To gather official IPO data, subscription details, and issue information directly from the exchange.
+
+**Data Categories to Scrape:**
+
+*   **Current/Ongoing IPOs:**
+    *   Table data from the "Current Issues" tab (#Ipo_current).
+        *   **Required Data Points (from Table):** Name, Price, Issue Size, Close Date, BoA Date, Listing Date, Status.
+        *   **CSS Selector (Table):** `#publicIssuesCurrent`
+    *   **Issue Information (for each IPO):** Tab - #IssueInformation
+        *   **Required Data Points (from Table):**  Detailed issue information (various fields in the table - needs further parsing and structuring).
+        *   **CSS Selector (Table):** `#issueInfo > div > div > table`
+    *   **Bid Details (for each IPO):** Tab - #bidDetails
+        *   **NSE Category:**
+            *   **Required Data Points (from Table):** Subscription details by category (Retail, SHNI, BHNI, etc.).
+            *   **CSS Selector (Table):** `#publicIssuesBidTable`
+        *   **Consolidated Category (All Exchanges):**
+            *   **Required Data Points (from Table):** Consolidated subscription details.
+            *   **CSS Selector (Table):** `#publicIssuesBidConsolidatedTable`
+    *   **Demand Graph (for each IPO):** Tab - #demand_Graph
+        *   **NSE Category:**
+            *   **Required Data Points (from Tables):** Demand details from tables below the graph.
+            *   **CSS Selector (Table 1):** `#nseDemandGraph > div > table`
+            *   **CSS Selector (Table 2):** `#nseDemandGraphSeries > div:nth-child(2) > table`
+        *   **All Category (Consolidated):** (Same CSS Selectors as NSE Category for tables below graph).
+    *   **Demand Data (for each IPO):** Tab - #demand_Data
+        *   **NSE Category:**
+            *   **Required Data Points (from Table):** Bid data details.
+            *   **CSS Selector (Table):** `#nseBidDataTable`
+        *   **All Exchange Category:**
+            *   **Required Data Points (from Table):** Consolidated bid data.
+            *   **CSS Selector (Table):** `#exchangeBidDataTable`
+
+*   **Upcoming IPOs:**
+    *   Table data from the "Upcoming Issues" tab (#ipo_upcomingIssue).
+        *   **Required Data Points (from Table):** Name, Price, Issue Size, Open Date, Close Date, BoA Date, Listing Date.
+        *   **CSS Selector (Table):** `#upcomingIpoTable`
+    *   **Issue Information (for each IPO):** Tab - #issueInfo (Same CSS selector as for Current IPOs).
+
+*   **Past IPOs:**
+    *   Table data from the "Past Issues" tab (#ipo_pastissue).
+        *   **Required Data Points (from Table):** Name, Symbol, Price Range, Issue Size, Listing Date, Links to IPO Details and Company Trade Details.
+        *   **CSS Selector (Table):** `#publicIssuePastTable`
+    *   **Issue Information & Bid Details (for each IPO):** Tabs - #IssueInformation, #bidDetails (Same CSS selectors as for Current/Upcoming IPOs if needed for historical data).
+
+**Navigation & Interaction Notes for NSE Scraping:**
+
+*   **Tab Switching:** Use tab selectors (`#Ipo_current`, `#ipo_pastissue`, `#ipo_upcomingIssue`) to navigate between IPO categories.
+*   **Refresh Button:**  Click refresh buttons (`#refresh`, `.refreshIcon.refreshFiling.mb-2 > a`) after changing categories or tabs to ensure data updates.
+*   **Category Dropdown (Bid Details, Demand Graph):** Use dropdowns (`#bidDetailsDropdown`, `#demandGraphSelect`) to switch between NSE and Consolidated data views.
+
+### 2. IPO Premium -  https://ipopremium.in/
+
+**Purpose:** To gather Grey Market Premium (GMP), Kostak, and Subject to Sauda data.
+
+*   **IPO Premium Table:**
+    *   **Required Data Points (from Table):** Company Name, Company Link, Exchange Board, Issue Type, Premium (GMP), Open Date, Close Date, Price Range, Lot Size, Allotment Date, Listing Date, Action (Apply/Check Allotment), Action Link, Remark, Cutoff Price, Upper Price Band, Lower Price Band, Allotment Link.
+    *   **CSS Selector (Table):** `body > div > div > section.content > div:nth-child(5) > div > div > div.box-body.no-padding.table-responsive > table`
+    *   **XPath (Table):** `/html/body/div[1]/div/section[2]/div[4]/div/div/div[2]/table`
+
+### 3. IPO Central -  https://ipocentral.in/ipo-discussion/
+
+**Purpose:** To gather GMP, Subject to, and Kostak data, particularly from discussion forums.
+
+*   **Mainboard IPO Table:**
+    *   **Required Data Points (from Table):** Company Name, Company Link, Price (Upper Band), GMP (₹), GMP (%), Subject to, Date, Exchange Board, Remarks.
+    *   **CSS Selector (Table):** `#tablepress-57`
+    *   **XPath (Table):** `//*[@id="tablepress-57"]`
+
+*   **SME IPO Table:**
+    *   **Required Data Points (from Table):** (Same as Mainboard IPO Table).
+    *   **CSS Selector (Table):** `#tablepress-58`
+    *   **XPath (Table):** `//*[@id="tablepress-58"]`
+
+### 4. IPO Watch -  https://ipowatch.in/ipo-grey-market-premium-latest-ipo-gmp/
+
+**Purpose:** To gather GMP, Subject to, and other market sentiment data.
+
+*   **IPO GMP Table:**
+    *   **Required Data Points (from Table):** Company Name, Company Link, GMP, Price, Gain, Date, Subject, Type (Exchange Board).
+    *   **CSS Selector (Table):** `body > div.elementor.elementor-4483.elementor-location-single.post-3445.page.type-page.status-publish.has-post-thumbnail.hentry > section > div > div.elementor-column.elementor-col-50.elementor-top-column.elementor-element.elementor-element-36a48a19 > div > div.elementor-element.elementor-element-1f27a874.elementor-widget.elementor-widget-theme-post-content > div > figure.wp-block-table.is-style-regular > table`
+    *   **XPath (Table):** `/html/body/div[1]/section/div/div[1]/div/div[5]/div/figure[1]/table`
+
+### 5. Chittorgarh/InvestorGain -  https://www.investorgain.com/report/live-ipo-gmp/331/all/
+
+**Purpose:** To gather GMP, Kostak, Subject to Sauda, and IPO status information.
+
+*   **IPO GMP Table:**
+    *   **Required Data Points (from Table):** Company Name, Company Link (construct base URL + href), Status, Price, GMP, Estimated Listing Gain, IPO Size, Lot Size, Open Date, Close Date, Basis of Allotment Date, Listing Date, GMP Updated Date.
+    *   **CSS Selector (Table):** `#report_table`
+    *   **XPath (Table):** `//*[@id="report_table"]`
+
+*   **Company Specific Data (from Company Link):**
+    *   **Retail Subject to Sauda:**
+        *   **CSS Selector (Option 1):** `#main > div:nth-child(5) > div > div.float-none.mb-2.ms-2 > div:nth-child(1) > p > span`
+        *   **CSS Selector (Option 2):** `#main > div:nth-child(5) > div > div.float-none.mb-2.ms-2 > div:nth-child(1) > p > span:nth-child(5)`
+        *   **CSS Selector (Option 3):** `#main > div:nth-child(5) > div > div.float-none.mb-2.ms-2 > div:nth-child(1) > p > span:nth-child(6)`
+        *   **XPath (Option 1):** `//*[@id="main"]/div[3]/div/div[2]/div[1]/p/span`
+        *   **XPath (Option 2):** `//*[@id="main"]/div[3]/div/div[2]/div[1]/p/span[1]`
+        *   **XPath (Option 3):** `//*[@id="main"]/div[3]/div/div[2]/div[1]/p/span[2]`
+    *   **Small HNI Subject to Sauda:** (Selectors and XPath similar to Retail Subject to Sauda, may require inspecting page source for specific variations).
+
+**Data Processing & Storage:**
+
+*   Scraped data will be cleaned, transformed, and structured for database insertion.
+*   Error handling and data validation will be implemented to ensure data integrity.
+*   Data will be stored in a database (schema defined in the Database Structure Document).
+
+This document provides a detailed plan for web scraping in Phase 1 of the IPO Dalal project. It includes target websites, data points, and selectors for efficient data extraction. Regular review and updates will be necessary as website structures may change.
+
+# IPO Dalal Project Documentation: Phase One - Database Structure
+
+**File Description:** This document outlines the database schema for Phase One of the IPO Dalal project. It defines the tables, columns, data types, and relationships required to store and manage IPO data scraped from various sources.
+
+---
+
+## Phase 1 Database Schema
+
+For Phase 1, the database will primarily focus on storing IPO information scraped from NSE, IPO Premium, IPO Central, IPO Watch, and InvestorGain. The schema is designed to be relational and efficiently store the required data for the website's core features.
+
+**Tables:**
+
+### 1. `companies` Table
+
+**Purpose:** Stores core information about IPO companies.
+
+**Columns:**
+
+| Column Name         | Data Type     | Constraints          | Description                                                                 |
+| ------------------- | ------------- | -------------------- | --------------------------------------------------------------------------- |
+| `company_id`        | INT           | PRIMARY KEY AUTO_INCREMENT | Unique identifier for each company                                          |
+| `company_name`      | VARCHAR(255)  | NOT NULL             | Name of the IPO company                                                     |
+| `symbol`            | VARCHAR(50)   | UNIQUE               | Stock symbol/ticker (after listing)                                         |
+| `exchange_board`    | VARCHAR(50)   |                      | Exchange board (Mainboard, BSE SME, NSE SME)                                |
+| `issue_type`        | VARCHAR(50)   |                      | Type of issue (IPO, FPO, InvIT)                                            |
+| `price_range`       | VARCHAR(100)  |                      | IPO price range (string representation)                                     |
+| `upper_price_band`  | DECIMAL(10, 2)|                      | Upper price band (numeric)                                                  |
+| `lower_price_band`  | DECIMAL(10, 2)|                      | Lower price band (numeric)                                                  |
+| `lot_size`          | INT           |                      | Number of shares per lot                                                    |
+| `issue_size`        | DECIMAL(20, 2)|                      | Total issue size in ₹ Crores                                                |
+| `open_date`         | DATE          |                      | IPO opening date                                                            |
+| `close_date`        | DATE          |                      | IPO closing date                                                            |
+| `basis_of_allotment_date` | DATE          |                      | Basis of Allotment date                                                    |
+| `listing_date`      | DATE          |                      | IPO listing date                                                            |
+| `listing_price`     | DECIMAL(10, 2)|                      | Listing price on exchange                                                    |
+| `current_price`     | DECIMAL(10, 2)|                      | Current market price                                                        |
+| `status`            | VARCHAR(50)   |                      | IPO status (Upcoming, Open, Closed, Listed, Withdrawn)                      |
+| `actions`           | VARCHAR(100)  |                      | Recommended action (Wait to Apply, Apply, Check Allotment, No Allotment)    |
+| `allotment_link`    | VARCHAR(255)  |                      | Link to check allotment status                                               |
+| `remark`            | TEXT          |                      | Additional remarks or notes                                                  |
+| `created_at`        | TIMESTAMP     | DEFAULT CURRENT_TIMESTAMP | Timestamp of record creation                                                |
+| `updated_at`        | TIMESTAMP     | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | Timestamp of record update                                                    |
+
+### 2. `gmp_data` Table
+
+**Purpose:** Stores Grey Market Premium (GMP) data from different sources.
+
+**Columns:**
+
+| Column Name        | Data Type     | Constraints                      | Description                                                                 |
+| ------------------ | ------------- | -------------------------------- | --------------------------------------------------------------------------- |
+| `gmp_data_id`      | INT           | PRIMARY KEY AUTO_INCREMENT         | Unique identifier for each GMP data record                               |
+| `company_id`       | INT           | NOT NULL, FOREIGN KEY (`companies`.`company_id`) | Foreign key referencing the `companies` table                               |
+| `source_website`   | VARCHAR(100)  | NOT NULL                         | Source website of the GMP data (e.g., IPO Premium, IPO Central, IPO Watch, InvestorGain) |
+| `gmp_rs`           | DECIMAL(10, 2)|                                    | GMP value in Rupees                                                         |
+| `gmp_percentage`   | DECIMAL(5, 2) |                                    | GMP value in Percentage                                                     |
+| `subject_to`       | DECIMAL(10, 2)|                                    | Subject to rate                                                             |
+| `kostak`           | DECIMAL(10, 2)|                                    | Kostak rate                                                                 |
+| `gmp_updated_date` | DATETIME      |                                    | Date and time when GMP data was last updated on the source website         |
+| `created_at`       | TIMESTAMP     | DEFAULT CURRENT_TIMESTAMP          | Timestamp of record creation                                                |
+| `updated_at`       | TIMESTAMP     | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | Timestamp of record update                                                    |
+
+### 3. `nse_subscription_data` Table
+
+**Purpose:** Stores subscription data scraped from NSE for different categories.
+
+**Columns:**
+
+| Column Name             | Data Type     | Constraints                      | Description                                                                    |
+| ----------------------- | ------------- | -------------------------------- | ------------------------------------------------------------------------------ |
+| `subscription_data_id`  | INT           | PRIMARY KEY AUTO_INCREMENT         | Unique identifier for each subscription data record                           |
+| `company_id`            | INT           | NOT NULL, FOREIGN KEY (`companies`.`company_id`) | Foreign key referencing the `companies` table                                   |
+| `category`              | VARCHAR(50)   | NOT NULL                         | Subscription category (Retail, SHNI, BHNI, Employee, Shareholder, etc.)      |
+| `exchange_type`         | VARCHAR(50)   | NOT NULL                         | Exchange type (NSE, Consolidated)                                            |
+| `subscription_times`    | DECIMAL(10, 2)|                                    | Subscription rate in times                                                      |
+| `bid_date_time`         | DATETIME      |                                    | Date and time of bid data                                                      |
+| `created_at`            | TIMESTAMP     | DEFAULT CURRENT_TIMESTAMP          | Timestamp of record creation                                                   |
+| `updated_at`            | TIMESTAMP     | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | Timestamp of record update                                                       |
+
+
+**Relationships:**
+
+*   `companies` table is the central table.
+*   `gmp_data` table has a **one-to-many** relationship with `companies` (one company can have multiple GMP data points from different sources).
+*   `nse_subscription_data` table has a **one-to-many** relationship with `companies` (one company can have multiple subscription data points for different categories and times).
+
+**Primary Key & Foreign Key Constraints:**
+
+*   Primary keys are defined for each table to uniquely identify records.
+*   Foreign keys are used to establish relationships between tables and ensure data integrity (e.g., `company_id` in `gmp_data` and `nse_subscription_data` tables referencing `companies` table).
+
+**Data Types:**
+
+*   Appropriate data types are chosen for each column to efficiently store and manage data (INT, VARCHAR, DECIMAL, DATE, DATETIME, TIMESTAMP, TEXT).
+
+**Future Enhancements (Database):**
+
+*   Additional tables for storing detailed issue information, financial data, news, and user-related data will be added in later phases.
+*   Indexing strategies will be implemented to optimize query performance as the database grows.
+
+This document outlines the initial database schema for Phase 1 of the IPO Dalal project. It is designed to be scalable and adaptable for future feature additions and data expansion.
+
+# IPO Dalal Project Documentation: IPO Dashboard / Home Page
+
+**File Description:** This document details the IPO Dashboard, which serves as the Home Page for the IPO Dalal project. It describes the purpose, sections, displayed information, and user benefits of this central page.
+
+---
+
+## 1. Overview
+
+The IPO Dashboard is the central landing page and primary interface for users of the IPO Dalal project. It provides a comprehensive overview of the IPO market by presenting information on ongoing, upcoming, and past **Mainboard and SME** IPOs in a clear and organized manner. The dashboard aims to be a one-stop view for users to quickly grasp the current IPO landscape and navigate to more detailed information.
+
+## 2. Purpose
+
+The primary purposes of the IPO Dashboard are to:
+
+*   **Provide a Centralized IPO Overview:** Offer a single page to view the status of all relevant **Mainboard and SME** IPOs (ongoing, upcoming, past).
+*   **Facilitate Quick Information Access:** Present key IPO data points at a glance, enabling users to quickly assess IPO opportunities.
+*   **Enhance Navigation:** Serve as a gateway to other features and detailed IPO information within the IPO Dalal platform.
+*   **Highlight Important IPO Events:** Emphasize critical IPO events like openings, closings, and listings for user awareness.
+
+## 3. Sections and Components
+
+The IPO Dashboard is structured into the following key sections:
+
+*   **Ongoing IPOs Table:**
+    *   **Purpose:** To display information about **Mainboard and SME** IPOs that are currently open for subscription.
+    *   **Data Source:** Dynamically fetched from the database, updated regularly via scrapers.
+    *   **Columns:**
+        *   **Name:** IPO Company Name.  Visually emphasized (e.g., with a button or box) if the IPO is "Opening Today" or "Closing Today" to highlight key events.
+        *   **Price:** IPO Price Range (₹).
+        *   **GMP:** Grey Market Premium (₹).
+        *   **Subscription Rate:** Overall Subscription Rate (times).
+        *   **Issue Size:** Total Issue Size (₹ Crores).
+        *   **Close Date:** IPO Closing Date.
+        *   **BoA Date:** Basis of Allotment Date.
+        *   **Listing Date:** IPO Listing Date.
+        *   **Status:**  Indicates "Ongoing" status.
+
+*   **Upcoming IPOs Table:**
+    *   **Purpose:** To display information about **Mainboard and SME** IPOs that are expected to open for subscription soon.
+    *   **Data Source:** Dynamically fetched from the database.
+    *   **Columns:**
+        *   **Name:** IPO Company Name.
+        *   **Price:** IPO Price Range (₹).
+        *   **GMP:** Grey Market Premium (₹).
+        *   **Issue Size:** Total Issue Size (₹ Crores).
+        *   **Open Date:** IPO Opening Date.
+        *   **Close Date:** IPO Closing Date.
+        *   **BoA Date:** Basis of Allotment Date.
+        *   **Listing Date:** IPO Listing Date.
+
+*   **Past IPOs Table:**
+    *   **Purpose:** To display information about **Mainboard and SME** IPOs that have already closed and been listed on the exchanges.
+    *   **Data Source:** Dynamically fetched from the database.
+    *   **Columns:**
+        *   **Name:** IPO Company Name.
+        *   **Symbol:** Stock Symbol after listing on the exchange.
+        *   **Price Range:** IPO Price Range (₹) during the IPO period.
+        *   **Issue Size:** Total Issue Size (₹ Crores).
+        *   **Listing Date:** IPO Listing Date.
+        *   **Listing Price:** Listing Price on the exchange on listing day (₹).
+        *   **Current Price:** Current Market Price of the stock (₹). Visually emphasized (e.g., with a button or box) if the IPO is "Listing Today".
+
+## 4. Data Display and Presentation
+
+*   **Tables:** IPO information is primarily presented in tabular format for easy readability and comparison of both Mainboard and SME IPOs.
+*   **Visual Emphasis:**  Small buttons, boxes, or distinct styling will be used within table cells to emphasize "Opening Today," "Closing Today," and "Listing Today" events, drawing user attention to time-sensitive IPOs.
+*   **Links:** Company Names in the tables will likely be hyperlinked to dedicated "IPO Details" pages (future feature) for more in-depth information about each IPO.
+*   **Real-time Data (Future):** In future phases, data will be updated in near real-time through background processes and scraper updates.
+
+## 5. Target Users
+
+The IPO Dashboard is designed for all users of the IPO Dalal platform, including:
+
+*   Retail Investors
+*   High Net Worth Individuals (HNIs)
+*   Financial Analysts
+*   Anyone interested in tracking and analyzing the Indian **Mainboard and SME** IPO market.
+
+## 6. Benefits
+
+Using the IPO Dashboard offers several key benefits:
+
+*   **At-a-Glance IPO Status:** Users can quickly see the current status of ongoing, upcoming, and past **Mainboard and SME** IPOs.
+*   **Efficient Information Gathering:** Provides essential IPO data points for both Mainboard and SME IPOs in a consolidated view, saving users time in searching for information across multiple sources.
+*   **Improved Decision Making:** Facilitates informed investment decisions by presenting key metrics like GMP, subscription rates, and timelines for both Mainboard and SME IPOs.
+*   **Timely Awareness of IPO Events:** Highlights critical IPO dates (opening, closing, listing) for both Mainboard and SME IPOs, ensuring users don't miss important deadlines.
+*   **Easy Navigation:** Serves as a central point to access other features of the IPO Dalal platform.
+
+This document provides a detailed description of the IPO Dashboard/Home Page for the IPO Dalal project. It outlines its purpose, components, data presentation, target users, and the benefits it offers as the central interface of the platform, specifically for both Mainboard and SME IPO tracking.
+
+# IPO Dalal Project Documentation: Funding Calculator
+
+**File Description:** This document describes the Funding Calculator feature of the IPO Dalal project. It outlines its purpose, functionality, inputs, outputs, and benefits for users.
+
+---
+
+## 1. Overview
+
+The Funding Calculator is a tool designed to help users estimate the capital required to invest in Initial Public Offerings (IPOs). It allows users to select IPOs they are interested in applying for and calculate the total investment, including potential interest costs if borrowing capital. The calculator also provides an estimated breakeven price and projected gains based on simplified calculations.
+
+## 2. Functionality
+
+The Funding Calculator provides the following key functionalities:
+
+*   **IPO Selection:**
+    *   Allows users to select IPOs from a dynamic list of current and upcoming IPOs.
+    *   Offers a "Custom IPO" option for manual entry of IPO details if the desired IPO is not listed.
+
+*   **Category-wise Application Input:**
+    *   For each selected IPO, users can specify the number of lots they intend to apply for in different investor categories:
+        *   Retail Individual Investor (RII)
+        *   Small Non-Institutional Investor (sNII)
+        *   Big Non-Institutional Investor (bNII)
+        *   Shareholder
+        *   Employee
+
+*   **Interest Rate and Loan Period Input:**
+    *   Users can input an annual interest rate (in percentage) and a loan period (in days) to calculate potential interest costs if they plan to borrow capital for IPO investment.
+
+*   **Data Prefetching:**
+    *   When an IPO is selected from the dynamic list, the calculator automatically prefetches relevant IPO details from the database, such as:
+        *   Share Price
+        *   Shares per Lot
+        *   (Future Enhancement: Shareholder/Employee discounts, Subscription Rates)
+    *   For "Custom IPO," users must manually input these details.
+
+*   **Capital Requirement Calculation:**
+    *   Calculates the total capital (principle) required for applying to the selected IPOs based on the number of lots and the applicable share price for each category.
+    *   Calculates the interest cost based on the input interest rate and loan period.
+    *   Determines the total cost, which is the sum of the capital required and the interest cost.
+
+*   **Output Display (Per IPO and Summary):**
+    *   **Per IPO Output:**
+        *   Total Investment for the IPO
+        *   Interest Cost allocated to the IPO
+        *   Total Cost for the IPO
+        *   Shares Applied (per category and total)
+        *   Lots Applied (per category and total)
+        *   Breakeven Price per share for the IPO
+        *   Estimated Expected Gain (simplified calculation based on GMP - *Refer Formulae Documentation*)
+
+    *   **Overall Summary Output (Across all selected IPOs):**
+        *   Total Investment across all selected IPOs
+        *   Total Interest Cost across all selected IPOs
+        *   Total Cost across all selected IPOs
+        *   Date Range for Capital Requirement (based on IPO closing dates)
+
+## 3. Inputs
+
+The Funding Calculator requires the following user inputs:
+
+*   **Interest Rate (per annum %):**  Annual interest rate for borrowed funds (Default: 10%).
+*   **Loan Period (Days):** Duration for which capital is borrowed (Default: 7 days).
+*   **IPO Selection:** Selection of IPOs from a list or "Custom IPO" option.
+*   **Category-wise Lots Applied (per IPO):** Number of lots to apply for each category (Retail, sNII, bNII, Shareholder, Employee).
+*   **(For Custom IPO):**
+    *   Share Price
+    *   Shares per Lot
+    *   (Optional: Shareholder Discount, Employee Discount)
+
+## 4. Outputs
+
+The Funding Calculator provides the following outputs:
+
+*   **Per IPO Details:** Investment, Interest Cost, Total Cost, Shares/Lots Applied, Breakeven Price, Expected Gain (per IPO).
+*   **Overall Summary:** Total Investment, Total Interest Cost, Total Cost, Capital Requirement Date Range (across all selected IPOs).
+
+## 5. Formulae
+
+The detailed formulas used in the Funding Calculator are documented in the separate **`formulae_documentation.md`** file. Key formulas include:
+
+*   Capital Required Calculation
+*   Interest Cost Calculation
+*   Total Cost Calculation
+*   Breakeven Price Calculation
+*   Simplified Expected Gain Calculation (based on GMP)
+
+## 6. Target Users
+
+The Funding Calculator is primarily intended for:
+
+*   Retail investors
+*   High Net Worth Individuals (HNIs)
+*   Anyone planning to invest in IPOs and wanting to estimate capital needs and potential costs.
+
+## 7. Benefits
+
+Using the Funding Calculator offers several benefits:
+
+*   **Financial Planning:** Helps users plan their finances and understand the capital outlay required for IPO investments.
+*   **Cost Estimation:**  Provides a clear estimate of the total cost, including potential interest expenses if borrowing capital.
+*   **Breakeven Analysis:** Calculates the breakeven price, aiding in investment decision-making.
+*   **Simplified Gain Projection:** Offers a basic projection of potential gains based on GMP, allowing for a quick assessment of potential returns.
+*   **Organized Summary:** Presents a consolidated summary of investment requirements and costs across multiple IPO applications.
+
+This document provides a comprehensive overview of the Funding Calculator feature. It helps users understand its purpose, functionalities, and how it can assist in IPO investment planning.
+
+# IPO Dalal Project Documentation: Formulae
+
+**File Description:** This document details the formulas and mathematical logic used within the IPO Dalal project, specifically for the Funding Calculator and Allocation Optimizer modules.
+
+---
+
+## 1. Funding Calculator Formulas
+
+The Funding Calculator is designed to help users estimate the capital required for IPO applications and project potential returns.
+
+**1.1. Variables:**
+
+The following variables are used in the Funding Calculator.  User-configurable fields are marked with **(User Input)**.
+
+*   **IPO Name (User Input):** Name of the IPO. Can be custom or selected from a list of current/upcoming IPOs.
+    *   **Default:** Custom (User manually inputs share price, lot size, etc.)
+*   **Share Price (₹) (User Input):**  Price per share of the IPO.
+    *   **Default:** share price will be autofetched form the db for the corresponding company. it will be '0' for custom
+*   **Shares per Lot (User Input):** Number of shares in one lot.
+    *   **Default:** shares per lot will be autofetched form the db for the corresponding company. it will be '0' for custom
+*   **Shareholder Discount (₹) (User Input):** Discount offered to shareholders (if applicable).
+    *   **Default:** Shareholder Discount will be autofetched form the db for the corresponding company. it will be '0' for custom
+*   **Employee Discount (₹) (User Input):** Discount offered to employees (if applicable).
+    *   **Default:** will be autofetched form the db for the corresponding company. it will be '0' for custom
+*   **Number of Lots (User Input):** Number of lots to apply for in each category (Retail, SHNI, BHNI, Shareholder, Employee).
+    *   **Default:** 0 for all categories
+*   **Category (User Input):** Application categories (Retail, SHNI, BHNI, Shareholder, Employee).
+*   **Subscription Rate (Fetched Data/User Input - optional):** Subscription rate for each category.
+    *   **Default:** 0 for all categories (If 'Use live subscription' is No)
+*   **Interest Rate (%) (per annum) (User Input):** Annual interest rate for borrowed capital.
+    *   **Default:** 10%
+*   **Loan Period (Days) (User Input):** Number of days for which capital is borrowed.
+    *   **Default:** 7 days
+*   **Application Applied Through (User Input):** Single or Multiple Accounts.
+    *   **Default:** Single
+*   **Use Live Subscription Data (User Input):** Yes/No. If 'Yes', subscription rates are fetched (future feature). 
+    *   **Default:** No
+*   **Shareholder Quota Eligible (User Input):** Yes/No.
+    *   **Default:** No
+*   **Employee Quota Eligible (User Input):** Yes/No.
+    *   **Default:** No
+*   **GMP (Grey Market Premium) (₹) (User Input):** Grey Market Premium for the IPO.
+    *   **Default:** will be autofetched form the db for the corresponding company. it will be '0' for custom
+
+**1.2. Derived Values & Formulas:**
+
+*   **Price/Value of One Lot:**
+    ```
+    Lot Value = Share Price * Shares per Lot
+    ```
+
+*   **Shareholder Price:**
+    ```
+    Shareholder Price = Share Price - Shareholder Discount
+    ```
+
+*   **Employee Price:**
+    ```
+    Employee Price = Share Price - Employee Discount
+    ```
+
+*   **Capital/Principle Required:**
+    ```
+    Capital Required = ∑ (Lots Applied in Category * Applicable Share Price for Category)
+    ```
+    Where:
+        *   Applicable Share Price for Retail, SHNI, BHNI = Share Price
+        *   Applicable Share Price for Shareholder = Shareholder Price
+        *   Applicable Share Price for Employee = Employee Price
+
+*   **Interest Cost:**
+    ```
+    Interest Cost = Capital Required * (Interest Rate / 100) * (Loan Period / 365)
+    ```
+
+*   **Total Cost:**
+    ```
+    Total Cost = Capital Required + Interest Cost
+    ```
+
+*   **Expected Gain (Simplified Calculation based on GMP):**
+    ```
+    Expected Gain = ∑ ( (Lots Applied in Category / Subscription Rate of Category) * (GMP + Category Discount) )
+    ```
+    Where:
+        *   Category Discount for Retail, SHNI, BHNI = 0
+        *   Category Discount for Shareholder = Shareholder Discount
+        *   Category Discount for Employee = Employee Discount
+        *   If Subscription Rate for a category is 0, assume Probability of Allotment = 0 for simplified calculation in Phase 1. (This basically means the category is not present. this may happen only in shareholder and employee categoty. ).
+        
+*   **Breakeven Price (per share):**
+    ```
+    Breakeven Price = (Share Price * Shares per Lot + (Interest Cost for all IPOs / Total Shares Applied across all IPOs)) / Shares per Lot
+    ```
+    *(Note: This is a simplified breakeven calculation assuming interest cost is distributed across all applied shares. More refined allocation methods can be implemented).*
+
+**1.3. Output Metrics:**
+
+The Funding Calculator will output the following:
+
+*   **For Each IPO:**
+    *   Shares Applied (per category and total)
+    *   Lots Applied (per category and total)
+    *   Capital Required (per category and total)
+    *   Interest Cost (allocated to the IPO, if applicable)
+    *   Total Cost (per IPO)
+    *   Breakeven Price (per share)
+    *   Expected Gain (per IPO, simplified calculation)
+*   **Overall Summary (Across All Selected IPOs):**
+    *   Total Investment (Capital Required)
+    *   Total Interest Cost
+    *   Total Cost
+    *   Date Range for Capital Requirement (based on IPO closing dates)
+
+
+## 2. Allocation Optimizer Formulas (Work In Progress - Basic Functionality in Phase 1)
+
+The Allocation Optimizer aims to suggest optimal IPO application strategies based on user inputs and IPO parameters.  Phase 1 will implement basic functionality. More advanced optimization strategies will be developed in later phases.
+
+**2.1. Basic Functionality (Phase 1) - Prioritization based on User-Selected Criteria:**
+
+In Phase 1, the Allocation Optimizer will primarily focus on allowing users to prioritize IPO applications based on:
+
+*   **GMP (Grey Market Premium)**
+*   **Subscription Rate**
+*   **Available Capital**
+
+Users will be able to rank these criteria in order of importance. The system will then suggest an allocation strategy based on these priorities.
+
+**Example - Prioritization Logic (Illustrative):**
+
+1.  **Rank IPOs by GMP (Highest to Lowest).**
+2.  **Filter IPOs based on Subscription Rate (e.g., only consider IPOs with Subscription Rate < X).**
+3.  **Allocate Capital based on remaining IPOs, starting with the highest GMP IPO, until Capital is exhausted.**
+
+**More Advanced Features (Future Phases - Not detailed in this document):**
+
+*   Optimization based on probabilistic allotment models.
+*   Capital rotation strategies across multiple IPOs based on timelines.
+*   Risk assessment and diversification considerations in allocation strategies.
+
+Detailed formulas for advanced optimization and allocation strategies will be documented in future iterations of this document.
+
+This document outlines the core formulas for the Funding Calculator and the basic framework for the Allocation Optimizer in Phase 1. As the project evolves, these formulas and functionalities will be refined and expanded.
+
+# IPO Knowledge Base 
+
+This document provides a condensed knowledge base about Initial Public Offerings (IPOs) in India
+
+## 1. IPO Basics
+
+*   **Definition:** Initial Public Offering - a company offers shares to the public for the first time via the stock market.
+*   **Purpose of IPO:**
+    *   Raising Capital for expansion, debt repayment, etc.
+    *   Exit for early investors.
+    *   Enhance credibility and brand image.
+*   **IPO Types:**
+    *   **Mainline IPO (Mainboard IPO):** For large companies, post-issue paid-up capital >= Rs 10 crores, listed on NSE/BSE. Strict norms.
+    *   **SME IPO:** For small and medium enterprises/start-ups, post-issue paid-up capital <= Rs 25 crores, listed on BSE SME/NSE Emerge. Relaxed norms.
+*   **IPO Advantages for Company:** Raise capital, exit for investors, cost-effective capital, visibility, brand image, correct valuation.
+*   **IPO Advantages for Investors:** Zero cost investment, easy application, opportunity to invest in growing companies, potential for profit.
+*   **IPO Disadvantages for Company:** Time-consuming, expensive (intermediary fees), dilution of ownership, regulatory compliance costs.
+*   **IPO Disadvantages for Investors:** Limited company history, risk of discount listing, no guaranteed allotment in oversubscription.
+
+---
+
+## 2. IPO Eligibility
+
+*   Companies must comply with SEBI and stock exchange (BSE/NSE) regulations.
+*   **Mainboard IPO Eligibility:**
+    *   **SEBI Entry Norm I (Profitability Route):**
+        *   Net tangible assets >= Rs 3 crores in each of the last 3 years.
+        *   Average operating profit (before tax) >= Rs 15 crore in 3 of last 5 years.
+        *   Issue size <= 5 times net worth (pre-issue).
+    *   **SEBI Entry Norm II (QIB Route):**
+        *   Book-building process mandatory.
+        *   Minimum 75% allocation to Qualified Institutional Buyers (QIBs).
+    *   **NSE Eligibility (additional):**
+        *   Promoter with >= 3 years experience in the industry.
+        *   Positive net worth (for issue size < Rs 500 Cr).
+        *   Post-issue paid-up equity > Rs 10 Cr.
+        *   Market capitalization > Rs 25 Cr.
+        *   No insolvency proceedings, winding-up petition.
+    *   **BSE Eligibility (similar to NSE):**
+        *   Minimum paid-up capital post-issue >= Rs 10 Cr.
+        *   Minimum issue size >= Rs 10 Cr.
+        *   Minimum market capitalization >= Rs 25 Cr.
+*   **SME IPO Eligibility:**
+    *   Post-issue paid-up capital <= Rs 25 crores.
+    *   **BSE SME Platform:**
+        *   Net worth >= Rs 1 crore for 2 preceding full financial years.
+        *   Net Tangible Assets >= Rs 3 crores in the last preceding financial year.
+        *   Track record (operations) >= 3 years.
+        *   Operating profits positive for 2 out of 3 latest financial years (latest FY mandatory).
+        *   Leverage ratio <= 3:1.
+    *   **NSE Emerge Platform:**
+        *   Company incorporated under Companies Act 1956/2013 in India.
+        *   Track record (operations) >= 3 years.
+        *   Promoters hold >= 20% of share capital post-issue.
+        *   Promoter with >= 3 years experience in the same industry.
+        *   Operating profit and positive net worth in at least 2 out of 3 fiscal years.
+        *   No BIFR, insolvency, winding-up proceedings.
+
+---
+
+## 3. IPO Pricing
+
+*   **IPO Price Determination Methods:**
+    *   **Fixed Price Issue:** Price is predetermined and announced in advance.
+    *   **Book Building Issue:** Price range is announced, price discovered based on demand during bidding.
+*   **Book Building Method Details:**
+    *   Price range announced (e.g., Rs 75-80).
+    *   Price range gap <= 20%.
+    *   Bids accepted within price range or at cut-off price (for retail).
+    *   Final price (cut-off price) determined after bidding closure.
+    *   Bidding period: 3-7 business days (can be extended).
+    *   Advantages: Efficient price discovery, realistic pricing based on demand.
+    *   Disadvantages: Costly, lengthy process, suitable for large issues.
+*   **Fixed Price Issue Method Details:**
+    *   Offer price is fixed in advance.
+    *   Simpler process, suitable for SME IPOs.
+    *   Bidding period: 3-10 business days.
+    *   Investor subscribes at the fixed price.
+*   **Book Building vs Fixed Price:**
+    *   **Book Building:** Price range, price discovered at end, demand known daily, QIBs pay 10% upfront, prospectus filed after issue, popular for Mainboard IPOs, price can be revised during issue.
+    *   **Fixed Price:** Fixed price, price set in advance, demand known at end, QIBs pay 100% upfront, prospectus filed before issue, common for SME IPOs, price cannot be changed.
+
+---
+
+## 4. IPO Process
+
+*   **General IPO Process Steps:**
+    1.  Merchant Banker Appointment.
+    2.  DRHP (Draft Red Herring Prospectus) Preparation and SEBI Approval (for Mainboard). Exchange Approval (for SME).
+    3.  IPO Application to Exchanges.
+    4.  Price Determination (Fixed or Book Building).
+    5.  RHP (Red Herring Prospectus) Submission.
+    6.  Road Show (IPO Marketing).
+    7.  IPO Open for Anchor Investors (if applicable).
+    8.  IPO Open for Public (Retail, NII, QIB).
+    9.  IPO Shares Allotment.
+    10. IPO Listing Date Announcement.
+    11. IPO Shares Listing (Pre-Open Session & Regular Trading).
+    12. Post-Listing Documents submission.
+*   **Key Differences: Mainboard vs SME IPO Process:**
+    *   SME IPO document review by Exchange, not SEBI.
+    *   Market Maker mandatory for SME IPO.
+    *   RHP filing with RoC before issue open for fixed-price SME IPO, after closure for book-building Mainboard IPO.
+*   **IPO Process Timeline (India, Tentative):**
+    *   Mainboard IPO: 6-12 months.
+    *   SME IPO: 3-4 months.
+    *   Planning: 2 weeks.
+    *   Due Diligence: 4-5 weeks.
+    *   DRHP Prep: 1 week.
+    *   SEBI Approval: 4-8 weeks.
+    *   RHP Submission: 2-3 weeks.
+    *   IPO Launch: Min 3 days.
+    *   Allotment: Within 1 day of issue closure.
+    *   Listing: Within 3 day of issue closure.
+    *   Post-issue: 2-3 weeks.
+
+---
+
+## 5. IPO Intermediaries
+
+*   **Key IPO Intermediaries and their Roles:**
+    *   **Issuer Company:** Company going public, offering shares.
+    *   **Stock Exchanges (BSE, NSE):** Provide trading platform, listing approval.
+    *   **SEBI (Market Regulator):** Regulates IPO process, investor protection.
+    *   **Merchant Banker (Lead Manager/BRLM):** Manages entire IPO process, due diligence, prospectus, marketing, coordination.
+    *   **Bankers to an Issue:** Manage IPO funds, escrow accounts, refunds.
+    *   **Self-Certified Syndicate Banks (SCSB):** Provide ASBA facility, block funds.
+    *   **Registrar to the Issue (RTI):** Manages IPO application data, allotment, refunds, shareholder records.
+    *   **IPO Underwriter:** Guarantees to buy unsold shares if IPO is under-subscribed (mandatory for SME IPOs).
+    *   **Market Maker:** Provides liquidity for SME IPO stocks (mandatory for SME IPOs).
+    *   **Depositories (NSDL, CDSL):** Hold shares in electronic form, dematerialization, credit shares.
+*   **Merchant Banker Responsibilities:**
+    *   **Pre-Issue:** Due diligence, eligibility check, underwriting agreement, IPO fees, issue structuring, DRHP preparation, application to SEBI/Exchanges, roadshow, RHP drafting.
+    *   **Post-Issue:** Monitoring reports, allotment assistance, post-issue ads, certificates submission, escrow account management, share allocation, refund.
+
+---
+
+## 6. IPO Investors
+
+*   **IPO Investor Categories:**
+    *   **Retail Individual Investors (RII):** Investment <= Rs 2 lakhs. Apply at cut-off price. Min 35% reservation (for Book Building Profitability Route), lottery allotment if oversubscribed. No lock-in.
+    *   **Non-Institutional Investors (NII/HNI):** Investment > Rs 2 lakhs. No cut-off price option. Min 15% reservation (for Book Building Profitability Route).
+        *   **Small NII (sNII/sHNI):** Investment Rs 2-10 lakhs. 1/3 of NII portion.
+        *   **Large NII (bNII/bHNI):** Investment > Rs 10 lakhs. 2/3 of NII portion.
+        Lottery allotment if oversubscribed. No lock-in.
+    *   **Qualified Institutional Buyers (QIB):** SEBI-registered institutions (MFs, banks, FPIs). No cut-off price option, proportionate allotment. Not more than 50% reservation (for Book Building Profitability Route), at least 75% (for QIB Route). No lock-in.
+    *   **Anchor Investors:** QIBs investing >= Rs 10 crore (Mainboard), >= Rs 1 crore (SME) before IPO opens to public. Lock-in period (30-90 days).
+    *   **Eligible Employees/Shareholders:** Reserved quota, discount possible, no lock-in.
+*   **Investor Category Comparison Table:** (Already provided in the original document - can be used as is)
+
+---
+
+## 7. IPO Prospectus
+
+*   **IPO Prospectus - Definition:** Offering document with company details for potential investors.
+*   **Types of Prospectus:**
+    *   **Draft Red Herring Prospectus (DRHP):** Preliminary prospectus, filed with SEBI/Exchange for approval, contains company overview, financials, risks, but no price or issue size details.
+    *   **Red Herring Prospectus (RHP):** Updated DRHP, filed after approval, includes latest financials, IPO timeline, pricing details (range for book-building), but no final price or share number.
+    *   **Final Prospectus:** Definitive document, contains all details including final issue price, number of shares, issue size. Filed with RoC.
+    *   **Abridged Prospectus:** Summary version, accompanies application form, key information at a glance.
+*   **DRHP vs RHP:**
+    *   DRHP - Draft document for approval & feedback, RHP - Updated document for IPO launch.
+    *   DRHP may not have price details, RHP has price range (for book-building).
+    *   DRHP filed at application, RHP after DRHP approval.
+    *   RHP mandatory for book-building issues, not for fixed-price (DRHP & Final Prospectus used).
+*   **IPO Prospectus Contents (General Sections):** Definitions, Summary, Risk Factors, Introduction, Offer Details, Company Details, Financial Information, Legal Info, Offer-related Info, AoA Provisions, Other Info.
+
+---
+
+## 8. IPO Valuation
+
+*   **IPO Valuation - Definition:** Process to determine appropriate company value for setting IPO price.
+*   **Factors Impacting IPO Valuation:** Demand, Past Financial Performance, Peer Comparison, Growth Rate, Market Trend, Products/Services, Company Management.
+*   **IPO Valuation Process:** Data gathering, analysis, audit, competitive valuation, factor analysis, valuation method application, document inclusion, SEBI submission.
+*   **IPO Valuation Methods:**
+    *   **Relative Valuation (Comparable Valuation/Multiples):** Compares key ratios (P/E, EV/EBITDA etc.) with similar listed companies.
+    *   **Absolute Valuation (Discounted Cash Flow - DCF):** Uses future cash flows, time value of money, discount rate (WACC) to determine present value.
+    *   **Economic Valuation:** Formula-based, uses company's debt, market cap, income, assets, etc.
+*   **Valuation in India:** Done by Merchant Bankers, reviewed by SEBI.
+*   **IPO Pricing vs Valuation:** Valuation is a factor for pricing, valuation process helps determine IPO price.
+
+---
+
+## 9. IPO Application
+
+*   **IPO Application - Definition:** Process of applying for IPO shares. Bidding process.
+*   **Application Methods:**
+    *   **Online:** Broker/Bank platforms, UPI or ASBA payment.
+    *   **Offline:** Physical form submission to broker/bank.
+*   **IPO Application Process (General):** Login -> Select IPO -> Fill Form -> Review -> Submit -> Payment (UPI/ASBA).
+*   **Investor Categories for Application:** RII, NII, QIB, Employee, Shareholder.
+*   **IPO Application Time:** IPO open min 3 days, max 10 days. Exchange window 10 AM - 5 PM. Bank/broker may have earlier cut-off.
+*   **IPO Application Charges:** Generally free for investors.
+*   **IPO Application Form:** Physical form for offline applications.
+*   **IPO Application Number:** Unique reference number for tracking application status.
+*   **IPO Application Rules:** One application per PAN, own bank account for payment, UPI for retail only, ASBA for all (except Anchor QIBs), retail can apply at cut-off price.
+*   **IPO Application Status:** Check via broker/bank platform, NSE/BSE website.
+
+---
+
+## 10. ASBA IPO
+
+*   **ASBA IPO - Definition:** Application Supported by Blocked Amount. Funds blocked in applicant's bank account instead of debiting.
+*   **ASBA Features:** Online/Offline application, funds blocked not debited, interest earned on blocked amount, lien lifted on non/partial allotment, no mandate approval (unlike UPI).
+*   **ASBA IPO Application Process:**
+    *   **Online:** Net banking -> Investments/IPO -> Select IPO -> Fill details -> Submit.
+    *   **Offline:** Get form -> Fill details -> Submit to SCSB branch.
+*   **ASBA IPO Application Form:** Download from NSE/BSE, physical form.
+*   **ASBA Charges:** No charges for application.
+*   **ASBA IPO Timing:** Same as IPO Application Time (Exchange window 10 AM - 5 PM).
+*   **ASBA IPO Limit:** Up to 3 bids, one application per account.
+*   **ASBA Rules:** Account in ASBA-supported bank, Net banking for online, PAN & Demat mandatory.
+*   **ASBA vs UPI:** ASBA - Bank account, no mandate, faster online, offline form to SCSB, for all investors. UPI - UPI ID, mandate needed, fast, offline form to broker/registrar (not SCSB), for individuals only.
+
+---
+
+## 11. UPI IPO Application
+
+*   **UPI IPO Application - Definition:** Using Unified Payments Interface (UPI) for IPO payment. Simpler, easier method.
+*   **UPI Mechanism:** Instant payment system, real-time transfer, needs UPI ID.
+*   **IPO UPI Process:**
+    *   **Online:** Broker platform -> IPO section -> Fill bid details -> Enter UPI ID -> Submit -> Approve mandate in UPI app.
+    *   **Offline:** Fill IPO form -> Enter UPI ID in payment section -> Submit form -> Approve mandate in UPI app.
+*   **IPO UPI ID:** Unique virtual payment address (VPA). Format: xxxxxx@bank/paymentapp.
+*   **UPI IPO Limit:** Individual investors only, up to Rs 5 lakhs (Retail limit remains Rs 2 lakhs).
+*   **UPI IPO Time:** Mandate approval before 5 PM issue closure.
+*   **UPI IPO Rules:** Individual investors only, UPI ID mandatory, mandate approval needed.
+*   **UPI Mandate Status:** Expired, not received, failed, revoked (cancellation).
+*   **UPI IPO Application Status:** Check via broker/bank platform.
+*   **UPI IPO Complaint:** Intermediary -> Bank/SCSB/Registrar -> SEBI.
+
+---
+
+## 12. IPO Application Modification
+
+*   **IPO Application Modification - Definition:** Facility to cancel or modify IPO bids.
+*   **Rules for Cancellation/Modification:**
+    *   Retail investors can cancel. QIBs/NIIs cannot cancel.
+    *   Retail investors can modify bid size (increase/decrease). QIBs/NIIs can only increase bid size.
+    *   Allowed during IPO open period only. No post-issue changes.
+*   **IPO Application Cancellation:** Online/Offline methods. Online is faster. Retail only.
+    *   **Online Steps:** Broker platform -> IPO tab -> Applied IPO -> Cancel/Withdraw Bid -> Confirm. Revoke UPI mandate (if needed).
+    *   **Offline Steps:** Cancellation letter with details to intermediary.
+    *   **Cancellation Time:** IPO open window (10 AM - 5 PM), check broker/bank deadline.
+*   **IPO Application Modification:** Online/Offline methods.
+    *   **Online Steps:** Broker platform -> IPO tab -> Applied IPO -> Modify Bid -> Change details -> Confirm/Update -> Approve revised UPI mandate.
+    *   **Offline Steps:** IPO Modification form with old & new bid details to intermediary.
+    *   **Modification Time:** IPO open window (10 AM - 5 PM), check broker/bank deadline.
+*   **IPO Modification Form:** Download from BSE/NSE.
+*   **IPO Application Rejection Reasons:** Incompetent applicant, price outside band, incorrect details (ASBA, UPI, PAN, DP), mismatch in names, bid below minimum, multiple applications, QIB/NII at cut-off, insufficient funds, intermediary errors.
+
+---
+
+## 13. IPO Subscription
+
+*   **IPO Subscription - Definition:** Number of shares and people bidding for IPO shares. Reflects IPO demand.
+*   **IPO Subscription Process:** Investor bid -> Broker/Bank -> Stock Exchange -> Registrar -> Allotment.
+*   **IPO Subscription Timing:** Investor to broker (anytime open), Broker to Exchange (10 AM - 5 PM issue days).
+*   **IPO Subscription Charges:** Free for investors to apply. Brokerage on selling allotted shares.
+*   **IPO Bidding Categories:** RII, NII, QIB, Employee, Shareholder, Anchor.
+*   **IPO Subscription Calculator:** Helps know issue subscription times. Calculated by dividing bids received by shares offered.
+*   **IPO Subscription Types:**
+    *   **Oversubscribed:** Bids > Shares offered. High demand, premium listing potential.
+    *   **Undersubscribed:** Bids < Shares offered. Demand < Supply.
+*   **IPO Subscription & Listing Price:** High subscription often indicates premium listing, but other factors also influence.
+*   **IPO Subscription & GMP:** Higher GMP often indicates higher subscription, reflects market sentiment.
+*   **IPO Subscription Historic Data:** Available on Chittorgarh.com and exchange websites.
+
+---
+
+## 14. IPO Allotment
+
+*   **IPO Allotment - Definition:** Process of allocating shares to IPO applicants.
+*   **IPO Allotment Rules:** By Registrar with exchange consultation, based on demand & category.
+*   **IPO Allotment Method:** Depends on subscription level & investor category. Lottery or proportionate.
+*   **IPO Allotment by Category:**
+    *   **Retail (RII):** At least 1 lot per RII (if possible), lottery if oversubscribed, pro-rata for remaining. Max RII Allotees = (Total RII shares) / (Lot Size).
+    *   **NII (sNII/bNII):** Minimum bid lot allotment, pro-rata for remaining (if any), lottery if oversubscribed.
+    *   **QIB:** Proportionate allotment, undersubscribed QIB portion not transferable.
+    *   **Anchor Investors:** Up to 60% of QIB portion, decided by issuer & lead manager.
+    *   **Employees/Shareholders:** Pro-rata allotment if oversubscribed.
+*   **IPO Allotment Process:** Registrar -> Data from exchange -> Validate applications -> Basis of Allotment (BOA) -> Allotment advice -> Notify banks/depositories -> Credit shares.
+*   **IPO Allotment Date:** Date allotment announced (3-4 days after issue close).
+*   **IPO Allotment Status Check:** Registrar website, PAN/Application/Demat number.
+*   **IPO Allotment Chances:** No guarantee, depends on subscription & category. Lottery in oversubscribed IPOs.
+*   **Basis of Allotment (BOA):** Document detailing allotment process per category, published by Registrar.
+
+---
+
+## 15. IPO Funds Unblocking
+
+*   **IPO Funds Unblocking - Definition:** Release of blocked funds in case of non-allotment or partial allotment.
+*   **Reasons for Unblocking Funds:** Non-Allotment, Non-receipt of minimum subscription (90%), Failure to get listing approval, Failure to allot to min. allottees, Failure to allot 75% QIB (QIB Route).
+*   **IPO Amount Unblock Time:** Within 4 working days of issue closure (for non-allotment, etc.).
+*   **Initiation of Refund Process:** Registrar instructs banks (SCSB) to unblock funds.
+*   **Modes of Refund Initiation:** ASBA - unblocking, UPI - revoke mandate, Anchor - electronic transfer (NACH, NEFT, etc.).
+*   **IPO Funds Not Unblocked:** Check with bank, then Registrar, then SEBI. Complaint with SEBI SCORES. Penalty for issuer if delay (15% p.a. interest).
+
+---
+
+## 16. IPO Listing
+
+*   **IPO Listing - Definition:** Shares admitted to trading on stock exchange. Final IPO process step.
+*   **IPO Listing Date:** Date shares start trading. Tentatively 6 business days after issue close (reducing to 3 days from Dec 1, 2023). Announced by Exchange notice.
+*   **IPO Listing Process:** Merchant Banker -> Exchange Approval -> Prospectus -> IPO Launch -> Allotment -> Refund/Credit -> Listing.
+*   **IPO Listing Time:** Listing day starts with ceremony, trading starts at 9:00 AM with Pre-Open Session (9:00 AM - 10:00 AM) and Regular Session (from 10:00 AM).
+    *   **Pre-Open Session:** 9:00 AM - 9:45 AM (order entry), 9:45 AM - 9:55 AM (order matching, listing price determination), 9:55 AM - 10:00 AM (transition). Equilibrium price at demand=supply.
+    *   **Regular Session:** Normal trading after 10:00 AM. Circuit limits applied.
+*   **IPO Listing Price:** Opening price on listing day, determined in Pre-Open Session. Equilibrium price. Circuit limits applied on listing day (5% +/- for issue size <= 250 Cr, 20% +/- for > 250 Cr).
+*   **IPO Share Listing Groups (BSE/NSE):** BSE (A, B, T, IF), NSE (EQ, BE, IV, ID, RR, RT). Groups define settlement type and intraday trading allowance. 'T' and 'BE' groups - Trade for Trade (no intraday for first 10 days for issue size <= 250 Cr).
+*   **IPO Listing vs Current Price:** Listing - opening price, Current - market price fluctuations after listing.
+*   **IPO Issue Price vs Listing Price:** Issue - set by issuer, Listing - determined by exchange in pre-open.
+*   **IPO Listing Price vs Opening Price:** Interchangeable terms, listing price is the opening price.
+
+---
+
+## 17. IPO Grey Market
+
+*   **IPO Grey Market - Definition:** Unofficial, informal market for trading IPO shares before official listing. Unregulated.
+*   **IPO Grey Market Premium (GMP) - Definition:** Premium over IPO issue price in grey market. Indicator of listing price expectations. Positive/Negative.
+*   **IPO Grey Market Dealers:** Unauthorised individuals, OTC trading, trust-based.
+*   **Trading in Grey Market:** Phone calls, cash settlement (Angadia), trust-based, 24/7 market, no regulation, no contracts. Share or application trading. Dealers act as brokers.
+*   **IPO Grey Market Rate Types:**
+    *   **Grey Market Premium (GMP):** Premium per share, fluctuates, indicates listing gain/loss expectation.
+    *   **Kostak Rate:** Fixed price for entire IPO application/lot, irrespective of allotment.
+    *   **Subject to Sauda:** Premium for application, paid only if allotment received, higher than Kostak.
+*   **GMP vs Kostak:** GMP - per share, fluctuating, based on demand. Kostak - fixed for application, based on agreement.
+*   **GMP vs Listing Price:** GMP - grey market indicator, Listing - official opening price.
+*   **Grey Market Trading Pros:** Profit potential, pre-listing trading, no application limit.
+*   **Grey Market Trading Cons:** Risky, unregulated, no grievance redressal, listing loss risk, no formal agreements.
+*   **GMP - Good or Bad?** Indicator, hedging tool, not gambling, watch GMP trends for investment decisions.
+
+---
+
+## 18. Unlisted Shares
+
+*   **Unlisted Shares - Definition:** Shares not listed on stock exchanges, traded Over-The-Counter (OTC).
+*   **Types of Unlisted Shares:** Pre-IPO, Delisted, Private Placement, ESOP, Private Company Shares.
+*   **Unlisted Shares Advantages:** Early investment, no allotment insecurity, potential higher returns, diversification.
+*   **Unlisted Shares Disadvantages:** Risky, illiquid, longer transactions, high investment amount, limited dealers, long-term investment focus.
+*   **Unlisted Securities Trading:** Brokers/Dealers, direct sellers, online/phone/email orders, Demat form. Exit via private sale, broker, buyback, acquisition.
+*   **Unlisted Shares Taxation:**
+    *   Short-term (<= 24 months): Taxed as per income tax slab.
+    *   Long-term (> 24 months): 20% with indexation.
+*   **Unlisted vs Listed Shares:** Unlisted - OTC, illiquid, unregulated, risky, difficult entry/exit. Listed - Exchange traded, liquid, SEBI regulated, less risky, easy buy/sell.
+
+---
+
+## 19. IPO KPIs
+
+*   **IPO KPIs - Definition:** Key Performance Indicators, quantitative measures of company business and performance.
+*   **Key IPO KPIs Explained:**
+    1.  **Revenue from Operations:** Income from primary business. Sales growth important.
+    2.  **Profit After Tax (PAT):** Net profit after expenses & taxes. Financial health indicator.
+    3.  **PAT Margin:** PAT as % of revenue. Profitability from sales.
+    4.  **Return on Capital Employed (RoCE):** Profitability on total invested capital (debt & equity).
+    5.  **Return on Equity (RoE):** Profitability on shareholder's equity.
+    6.  **Return on Net Worth (RoNW):** Profitability on net assets (equity & reserves).
+    7.  **Debt Equity Ratio:** Debt vs Equity financing. Leverage and risk indicator.
+    8.  **Earnings Per Share (EPS):** Profit per share. Basic & Diluted EPS.
+    9.  **Price to Earning Ratio (PE Ratio):** Share price vs EPS. Valuation indicator. Forward PE, Industry PE comparison.
+    10. **EBITDA Margin:** Earnings before interest, taxes, depreciation, amortization as % of revenue. Operational profitability.
+    11. **Price to Book Value (P/BV Ratio):** Market price vs Net Asset Value per share. Valuation indicator (undervalued/overvalued).
+*   **KPI Analysis:** No single KPI sufficient, analyze trends, compare with industry peers for informed investment decision. Example of Mukka Proteins KPI analysis provided.
+
+---
+
+This markdown provides a condensed and structured knowledge base on IPOs. It should be helpful for Cursor AI to understand the key concepts and potentially be used to build an IPO calculator project. Remember to review and refine this further based on specific requirements of your project.
+
+# IPO Dalal Project Documentation: UI, Frontend, and Backend Tech Stack
+
+**File Description:** This document outlines the technology stack chosen for the User Interface (UI), Frontend, and Backend of the IPO Dalal project, considering the project's aesthetic, performance, and functional requirements.
+
+---
+
+## 1. UI/UX Design Principles
+
+The UI/UX design for IPO Dalal will adhere to the following principles:
+
+*   **Aesthetic and Minimalistic Theme:**  A clean, uncluttered design focusing on essential information and ease of use. The visual style will be modern and aesthetically pleasing without unnecessary distractions.
+*   **Light, Dark, and System Default Themes:**  Users will be able to choose between light and dark themes, with an option to follow the system's default theme setting for optimal user experience across different environments.
+*   **Indian Numbering System and ₹ Symbol:** All monetary values will be displayed using the Indian numbering system (Lakhs, Crores) and prefixed with the ₹ symbol for clear and culturally relevant financial representation.
+*   **Visual Hierarchy:**  Information will be structured with a clear visual hierarchy to guide the user's eye and emphasize important data points. This includes using font sizes, spacing, and visual cues to prioritize content.
+*   **Fast and Efficient Website:** Performance is a key priority. The frontend will be built to ensure fast loading times, smooth interactions, and efficient data rendering.
+*   **Responsive Design:** The website will be fully responsive, ensuring optimal viewing and functionality across desktops, tablets, and mobile devices.
+
+**Color Palette:**
+
+*   **Background:** `#E4E5E4`
+*   **Highlight Shades (Yellow):** `#E7D100`, `#FFF6AD`, `#FEF48A`, `#FEF065`, `#FEE600`
+*   **Hover Color (White-like):** `#E9E9E9`
+*   **Text Box/Element Shades (Grey):** `#E9E9E9`, `#E5E5E5`, `#D4D4D4`, `#A3A3A3`
+*   **"Closing/Opening Today" Box:** `#D4D4D4`
+
+**Styling:**
+
+*   **Table Borders:** `border p-3 shadow-hard` (using Tailwind CSS classes from Shadcn UI or similar)
+
+## 2. Frontend Tech Stack
+
+*   **Framework:** **React v19**
+    *   **Purpose:** To build a dynamic, interactive, and component-based user interface. React's component architecture promotes reusability and maintainability, crucial for a feature-rich dashboard. React v19 ensures we are using the latest stable and performant version.
+    *   **Language:** **JavaScript (JS)** - The primary language for React development.
+
+*   **UI Library & Component Library:** **Shadcn UI**
+    *   **Purpose:** To provide a set of pre-designed, aesthetically pleasing, and accessible UI components. Shadcn UI, built on Tailwind CSS and Radix UI, aligns perfectly with the minimalistic and modern aesthetic goal. It offers excellent customization and utility-first styling via Tailwind CSS, enhancing development speed and design consistency.
+    *   **Rationale for Choosing Shadcn UI over Material-UI:** While Material-UI is a robust component library, Shadcn UI's unstyled nature and direct component integration offer greater flexibility for achieving a truly minimalistic and customized aesthetic. Focusing on Shadcn UI will streamline development and avoid potential style conflicts between multiple component libraries.
+
+*   **Styling Utility:** **Tailwind CSS (Integrated with Shadcn UI)**
+    *   **Purpose:** For utility-first CSS styling, enabling rapid and consistent styling by applying utility classes directly in the component markup. Tailwind CSS is fundamental to customizing Shadcn UI components and achieving the desired visual theme.
+
+*   **State Management:** **Zustand**
+    *   **Purpose:** For simple and scalable state management within the React application. Zustand is a minimalistic and unopinionated state management library well-suited for React, offering ease of use and good performance.
+
+*   **Charting Library:** **Recharts**
+    *   **Purpose:** To render interactive and visually appealing charts and graphs for displaying IPO data (e.g., GMP trends, subscription rates). Recharts is a React-based composable charting library that is lightweight and highly customizable, fitting the aesthetic and performance requirements.
+
+## 3. Backend Tech Stack
+
+*   **Framework:** **Express.js**
+    *   **Purpose:** To build the backend API for the IPO Dalal project. Express.js is a lightweight and flexible Node.js framework, ideal for creating RESTful APIs to serve data to the React frontend.
+    *   **Language:** **JavaScript (JS)** - Backend logic will be written in JavaScript, aligning with the frontend language for potential full-stack JavaScript development and team familiarity.
+    *   **PERN Stack Context:**  While the request mentions PERN stack, and PostgreSQL is chosen as the database,  Express.js is being used here instead of a purely "PostgREST" approach (which directly exposes PostgreSQL as a REST API). Express.js provides more flexibility for custom business logic, data processing, and potentially more complex API endpoints beyond simple database CRUD operations.
+
+## 4. Deployment Platform
+
+*   **Platform:** **Vercel**
+    *   **Purpose:** For easy and efficient deployment of both the frontend React application and potentially the backend API (if Node.js backend is also deployed on Vercel). Vercel is known for its seamless integration with modern frontend frameworks like React and its excellent performance and global CDN.
+
+This tech stack is specifically chosen to meet the aesthetic, performance, responsiveness, and functional requirements of the IPO Dalal project, providing a modern, efficient, and maintainable platform.
+
+---
+
+### 2. Database, API, and Scraper Tech Stack Documentation (database_api_scraper_tech_stack.md)
+
+```markdown
+# IPO Dalal Project Documentation: Database, API, and Scraper Tech Stack
+
+**File Description:** This document outlines the technology stack chosen for the Database, API, and Scraper components of the IPO Dalal project, focusing on data management, access, and collection.
+
+---
+
+## 1. Database
+
+*   **Database System:** **PostgreSQL**
+    *   **Purpose:** To serve as the primary database for storing all IPO-related data, company information, and potentially user data in future phases. PostgreSQL is a robust, scalable, and open-source relational database system known for its reliability, data integrity, and advanced features.
+    *   **Rationale:** PostgreSQL is chosen for its proven track record in production environments, strong SQL compliance, JSON support (useful for semi-structured data), and suitability for web applications. It is a core component of the PERN stack, aligning with the project's technology preferences.
+
+*   **Managed Database Service (Optional):** **Supabase**
+    *   **Purpose:** To potentially leverage Supabase as a managed PostgreSQL service. Supabase offers a Backend-as-a-Service (BaaS) platform built on top of PostgreSQL, providing features like:
+        *   Managed PostgreSQL database hosting.
+        *   Realtime database capabilities.
+        *   Authentication and authorization.
+        *   Auto-generated APIs.
+    *   **Consideration:** Supabase can simplify database setup, management, and backend development.  While PostgREST is mentioned for API, Supabase provides a broader set of backend functionalities. The project can choose to use Supabase directly for database hosting and backend services, or use a self-hosted PostgreSQL and potentially PostgREST/Express.js for API layers depending on project complexity and desired control.
+
+## 2. API (Application Programming Interface)
+
+*   **API Layer (Option 1 - Simplified):** **PostgREST**
+    *   **Purpose:** To automatically create a RESTful API directly from the PostgreSQL database schema. PostgREST dynamically generates a complete REST API based on the database tables and relationships, minimizing backend coding for basic CRUD operations.
+    *   **Rationale:** PostgREST offers a very rapid way to expose the database data as an API, reducing development time for basic data access. It aligns well with PostgreSQL and can be highly performant for data-centric APIs.
+
+*   **API Layer (Option 2 - Flexible):** **Express.js (as documented in UI/Frontend/Backend Tech Stack)**
+    *   **Purpose:** To build a more customized and flexible API using Express.js (Node.js). Express.js allows for implementing complex business logic, data transformations, custom endpoints, and more sophisticated API functionalities beyond what PostgREST directly provides.
+    *   **Rationale:** If the project requires more than basic CRUD operations or needs custom API logic, Express.js offers the necessary flexibility. It can also integrate with PostgreSQL using Node.js PostgreSQL libraries.
+
+*   **API Choice Decision:** The choice between PostgREST and Express.js for the API layer depends on the project's complexity. For Phase 1, if the API primarily needs to serve database data with minimal custom logic, PostgREST could be a faster and simpler option. If more complex API logic or backend processing is required, Express.js provides greater control and flexibility.
+
+## 3. Scraper
+
+*   **Language:** **Python**
+    *   **Purpose:** To develop web scrapers for collecting IPO data from various online sources. Python is chosen for its rich ecosystem of web scraping libraries and ease of use.
+
+*   **HTML Parsing Library:** **Beautiful Soup (Python)**
+    *   **Purpose:** To efficiently parse HTML content extracted from web pages. Beautiful Soup simplifies navigating and searching the HTML structure to extract relevant IPO data points. It is well-suited for parsing relatively static HTML content.
+
+*   **Browser Automation & JS Heavy Scraping Library:** **Playwright (Python)**
+    *   **Purpose:** To handle scraping of dynamic websites that heavily rely on JavaScript to load content. Playwright allows for browser automation, enabling the scraper to interact with web pages, execute JavaScript, and scrape data that is rendered client-side. This is crucial for scraping modern websites and potentially for handling interactions on sites like NSE India.
+
+*   **Data Storage:** **Supabase (PostgreSQL) - via Python Supabase Library**
+    *   **Purpose:** Scraped data, after being parsed and cleaned in Python, will be stored in the PostgreSQL database (potentially hosted on Supabase). The Python Supabase library will be used to connect to the Supabase database and insert the scraped IPO data.
+
+This tech stack for Database, API, and Scraper is designed to be robust, efficient, and scalable for collecting, managing, and providing access to IPO data for the IPO Dalal project.
+
+---
+
+These are the two markdown files outlining the tech stack for UI/Frontend/Backend and Database/API/Scraper as requested. They incorporate the design requirements and specified technologies, presented in a clear and straightforward manner, similar to the previous documentation files. Let me know if you need any further modifications.
