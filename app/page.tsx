@@ -188,6 +188,73 @@ const marketIndicators = [
 export default function Home() {
   return (
     <div className="flex flex-col gap-8">
+      {/* Quick Access Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="border-2 border-primary/20 hover:border-primary/40 transition-colors">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Bid Analysis</CardTitle>
+            <TrendingUp className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-lg font-bold">Live Bid Details</div>
+            <p className="text-xs text-muted-foreground">
+              Comprehensive demand schedule analysis
+            </p>
+            <a href="/bid-analysis" className="text-xs text-primary hover:underline">
+              View Analysis →
+            </a>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-2 border-blue-200 hover:border-blue-400 transition-colors">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">GMP Tracker</CardTitle>
+            <DollarSign className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-lg font-bold">Grey Market Premium</div>
+            <p className="text-xs text-muted-foreground">
+              Real-time GMP aggregation
+            </p>
+            <a href="/gmp-aggregator" className="text-xs text-blue-600 hover:underline">
+              View GMP →
+            </a>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-2 border-green-200 hover:border-green-400 transition-colors">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Subscription Tracker</CardTitle>
+            <Gauge className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-lg font-bold">Live Subscription</div>
+            <p className="text-xs text-muted-foreground">
+              Real-time subscription rates
+            </p>
+            <a href="/subscription-aggregator" className="text-xs text-green-600 hover:underline">
+              View Subscriptions →
+            </a>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-2 border-orange-200 hover:border-orange-400 transition-colors">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Portfolio Tools</CardTitle>
+            <Landmark className="h-4 w-4 text-orange-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-lg font-bold">Calculators & Tools</div>
+            <p className="text-xs text-muted-foreground">
+              Funding & allocation optimizer
+            </p>
+            <a href="/allocation-optimizer" className="text-xs text-orange-600 hover:underline">
+              Optimize Portfolio →
+            </a>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Market Summary */}
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-5">
         {marketIndicators.map((indicator, index) => (

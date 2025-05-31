@@ -1,6 +1,38 @@
 // Mock IPO Data - Centralized Database File
 // This will serve as our database substitute until we implement a real database
 
+// Bid Details Interfaces
+export interface BidDetailPrice {
+  price: number
+  quantity: number
+}
+
+export interface DemandScheduleCategory {
+  category: string
+  subcategory?: string
+  sharesOffered: number
+  sharesBidFor: number
+  subscriptionMultiple: number
+}
+
+export interface BidDetails {
+  id: number
+  companyName: string
+  priceBand: {
+    min: number
+    max: number
+  }
+  cutOffPrice: number
+  exchange: "BSE" | "NSE" | "Combined"
+  bidPrices: BidDetailPrice[]
+  cutOffBids: number
+  demandSchedule: DemandScheduleCategory[]
+  totalSharesOffered: number
+  totalSharesBidFor: number
+  overallSubscription: number
+  lastUpdated: string
+}
+
 export interface IPOCategoryDetails {
   lotSize: number
   applicationValue: number
@@ -479,6 +511,198 @@ export const mockIPOData: IPOData[] = [
   },
 ];
 
+// Bid Details Data - Based on Ather Energy Limited example
+export const mockBidDetailsData: BidDetails[] = [
+  {
+    id: 1,
+    companyName: "Ather Energy Limited",
+    priceBand: { min: 304, max: 321 },
+    cutOffPrice: 321,
+    exchange: "BSE",
+    bidPrices: [
+      { price: 304, quantity: 55582996 },
+      { price: 305, quantity: 55481704 },
+      { price: 306, quantity: 55453092 },
+      { price: 307, quantity: 55447296 },
+      { price: 308, quantity: 55445456 },
+      { price: 309, quantity: 55441178 },
+      { price: 310, quantity: 55439522 },
+      { price: 311, quantity: 55408288 },
+      { price: 312, quantity: 55401572 },
+      { price: 313, quantity: 55396926 },
+      { price: 314, quantity: 55394810 },
+      { price: 315, quantity: 55393016 },
+      { price: 316, quantity: 55363070 },
+      { price: 317, quantity: 55361184 },
+      { price: 318, quantity: 55360264 },
+      { price: 319, quantity: 55354882 },
+      { price: 320, quantity: 55347430 },
+      { price: 321, quantity: 55328892 },
+    ],
+    cutOffBids: 6566914,
+    demandSchedule: [
+      {
+        category: "Qualified Institutional Buyers (QIBs)",
+        sharesOffered: 2748241,
+        sharesBidFor: 21983883,
+        subscriptionMultiple: 8.00
+      },
+      {
+        category: "Foreign Institutional Investors (FIIs)",
+        subcategory: "QIBs",
+        sharesOffered: 0,
+        sharesBidFor: 3802751,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Domestic Financial Institutions",
+        subcategory: "QIBs",
+        sharesOffered: 0,
+        sharesBidFor: 2276034,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Mutual funds",
+        subcategory: "QIBs",
+        sharesOffered: 0,
+        sharesBidFor: 15887595,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Others",
+        subcategory: "QIBs",
+        sharesOffered: 0,
+        sharesBidFor: 17503,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Non Institutional Investors",
+        sharesOffered: 1947222,
+        sharesBidFor: 2594262,
+        subscriptionMultiple: 1.33
+      },
+      {
+        category: "Corporates",
+        subcategory: "Non Institutional",
+        sharesOffered: 0,
+        sharesBidFor: 632592,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Individuals (Other than RIIs)",
+        subcategory: "Non Institutional",
+        sharesOffered: 0,
+        sharesBidFor: 1928918,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Others",
+        subcategory: "Non Institutional",
+        sharesOffered: 0,
+        sharesBidFor: 32752,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Retail Individual Investors (RIIs)",
+        sharesOffered: 4543517,
+        sharesBidFor: 2667379,
+        subscriptionMultiple: 0.59
+      },
+      {
+        category: "Cut Off",
+        subcategory: "RIIs",
+        sharesOffered: 0,
+        sharesBidFor: 2231713,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Price bids",
+        subcategory: "RIIs",
+        sharesOffered: 0,
+        sharesBidFor: 435666,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Employees",
+        sharesOffered: 117213,
+        sharesBidFor: 11201,
+        subscriptionMultiple: 0.10
+      },
+      {
+        category: "Cut Off",
+        subcategory: "Employees",
+        sharesOffered: 0,
+        sharesBidFor: 5819,
+        subscriptionMultiple: 0
+      },
+      {
+        category: "Price Bids",
+        subcategory: "Employees",
+        sharesOffered: 0,
+        sharesBidFor: 5382,
+        subscriptionMultiple: 0
+      }
+    ],
+    totalSharesOffered: 9356193,
+    totalSharesBidFor: 27256725,
+    overallSubscription: 2.91,
+    lastUpdated: "2025-01-06T14:30:00.000Z"
+  },
+  {
+    id: 2,
+    companyName: "TechSoft India Ltd",
+    priceBand: { min: 1125, max: 1185 },
+    cutOffPrice: 1185,
+    exchange: "BSE",
+    bidPrices: [
+      { price: 1125, quantity: 2456789 },
+      { price: 1130, quantity: 2434567 },
+      { price: 1135, quantity: 2423456 },
+      { price: 1140, quantity: 2412345 },
+      { price: 1145, quantity: 2401234 },
+      { price: 1150, quantity: 2390123 },
+      { price: 1155, quantity: 2389012 },
+      { price: 1160, quantity: 2378901 },
+      { price: 1165, quantity: 2367890 },
+      { price: 1170, quantity: 2356789 },
+      { price: 1175, quantity: 2345678 },
+      { price: 1180, quantity: 2334567 },
+      { price: 1185, quantity: 2323456 }
+    ],
+    cutOffBids: 1234567,
+    demandSchedule: [
+      {
+        category: "Qualified Institutional Buyers (QIBs)",
+        sharesOffered: 876543,
+        sharesBidFor: 3506172,
+        subscriptionMultiple: 4.00
+      },
+      {
+        category: "Non Institutional Investors",
+        sharesOffered: 621234,
+        sharesBidFor: 1863702,
+        subscriptionMultiple: 3.00
+      },
+      {
+        category: "Retail Individual Investors (RIIs)",
+        sharesOffered: 1450987,
+        sharesBidFor: 1450987,
+        subscriptionMultiple: 1.00
+      },
+      {
+        category: "Employees",
+        sharesOffered: 50000,
+        sharesBidFor: 25000,
+        subscriptionMultiple: 0.50
+      }
+    ],
+    totalSharesOffered: 2998764,
+    totalSharesBidFor: 6845861,
+    overallSubscription: 2.28,
+    lastUpdated: "2025-01-06T16:00:00.000Z"
+  }
+];
+
 // Allocation strategies
 export const allocationStrategies = [
   { id: "gmp", name: "Grey Market Premium (GMP)" },
@@ -531,3 +755,19 @@ export const getUniqueRiskRatings = (): string[] => {
 
 // Export the data for backward compatibility
 export const availableIPOs = mockIPOData;
+// Helper functions for bid details
+export const getBidDetailsById = (id: number): BidDetails | undefined => {
+  return mockBidDetailsData.find(bid => bid.id === id);
+};
+
+export const getBidDetailsByCompany = (companyName: string): BidDetails | undefined => {
+  return mockBidDetailsData.find(bid => bid.companyName.toLowerCase().includes(companyName.toLowerCase()));
+};
+
+export const getAllBidDetails = (): BidDetails[] => {
+  return mockBidDetailsData;
+};
+
+export const getBidDetailsByExchange = (exchange: "BSE" | "NSE" | "Combined"): BidDetails[] => {
+  return mockBidDetailsData.filter(bid => bid.exchange === exchange);
+};

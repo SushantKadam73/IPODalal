@@ -32,10 +32,54 @@ export default function DocsPage() {
                   The IPO Dashboard provides a comprehensive view of the IPO market, including:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Market summary with key indicators like Nifty 50, Bank Nifty, USD/INR, and more</li>
+                  <li>Market summary with key indicators like Nifty 50, Bank Nifty, USD/INR, Bitcoin, and Market Mood Index</li>
                   <li>Ongoing IPOs with details on price, GMP, subscription rates, and important dates</li>
                   <li>Upcoming IPOs to help you plan your investments</li>
                   <li>Past IPOs with listing performance and current market prices</li>
+                  <li>Separate tabs for Mainboard and SME IPOs for better organization</li>
+                </ul>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">GMP Aggregator</h3>
+                <p className="text-muted-foreground">The GMP Aggregator provides comprehensive Grey Market Premium tracking with:</p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>Real-time GMP data aggregated from multiple sources (InvestorGain, IPOCentral, IPOWatch, IPOPremium)</li>
+                  <li>Estimated listing prices and profit calculations for different categories</li>
+                  <li>Kostak rates for both retail and HNI investors</li>
+                  <li>Subject to Sauda prices for grey market trading</li>
+                  <li>Separate views for Mainboard and SME IPOs</li>
+                  <li>Last updated timestamps for data freshness tracking</li>
+                </ul>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">Subscription Aggregator</h3>
+                <p className="text-muted-foreground">The Subscription Aggregator offers detailed subscription tracking with:</p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>Exchange-wise subscription data (NSE, BSE, and Consolidated)</li>
+                  <li>Category-wise subscription rates (QIB, NII SHNI, NII BHNI, Retail, Employee, Shareholder)</li>
+                  <li>Interactive charts showing daily subscription patterns over the issue period</li>
+                  <li>Money inflow charts displaying cumulative bid amounts over time</li>
+                  <li>Total bid amounts and application counts for each IPO</li>
+                  <li>Click-to-view detailed analytics for individual IPOs</li>
+                  <li>Progress indicators for subscription visualization</li>
+                </ul>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">IPO Selection Dashboard</h3>
+                <p className="text-muted-foreground">
+                  The IPO Selection Dashboard helps you discover and analyze IPOs with:
+                </p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>Smart selection criteria with customizable GMP thresholds and risk tolerance</li>
+                  <li>Advanced filtering by IPO type, status, sector, and risk rating</li>
+                  <li>Automated smart selection based on your investment preferences</li>
+                  <li>Integrated category input controls for each IPO (Retail, SHNI, BHNI, Shareholder, Employee)</li>
+                  <li>Real-time calculation of lots and investment values</li>
+                  <li>Discount highlighting for shareholder and employee categories</li>
+                  <li>Bulk selection and reset functionality</li>
                 </ul>
               </div>
 
@@ -48,6 +92,7 @@ export default function DocsPage() {
                   <li>Computing expected returns and allocation based on subscription rates</li>
                   <li>Providing category-wise application details (Retail, HNI, etc.)</li>
                   <li>Filtering IPOs by type (Mainboard/SME) and status (Current/Upcoming)</li>
+                  <li>Expected allotment calculations based on historical data</li>
                 </ul>
               </div>
 
@@ -58,14 +103,19 @@ export default function DocsPage() {
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>
-                    Implementing four distinct allocation strategies (GMP, Subscription Rate, Capital Utilization,
-                    Optimize)
+                    Implementing four distinct allocation strategies:
+                    <ul className="list-disc pl-6 mt-2 space-y-1">
+                      <li><strong>GMP Strategy:</strong> Prioritizes IPOs with highest GMP percentage</li>
+                      <li><strong>Subscription Strategy:</strong> Focuses on IPOs with lower subscription rates for better allotment chances</li>
+                      <li><strong>Capital Utilization:</strong> Maximizes number of applications by prioritizing lower-cost IPOs</li>
+                      <li><strong>Optimize Strategy:</strong> Combines GMP, subscription rate, and capital efficiency</li>
+                    </ul>
                   </li>
-                  <li>Prioritizing IPOs based on your selected strategy</li>
-                  <li>Recommending optimal lot allocations across multiple IPOs</li>
-                  <li>Estimating potential returns based on current GMP</li>
-                  <li>Accounting for different account types (Retail, Shareholder, Employee)</li>
-                  <li>Calculating expected allotment based on subscription rates and allotment rules</li>
+                  <li>Multi-account support for Retail, Shareholder, and Employee categories</li>
+                  <li>Intelligent allotment probability calculations based on subscription rates</li>
+                  <li>Comprehensive results showing expected gains, ROI, and capital utilization</li>
+                  <li>Support for discount pricing in shareholder and employee categories</li>
+                  <li>Detailed account tracking and remaining capital management</li>
                 </ul>
               </div>
             </CardContent>
@@ -81,6 +131,21 @@ export default function DocsPage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="border-l-2 border-primary pl-4 space-y-2">
+                <h3 className="text-lg font-semibold">Version 0.4.0 (Current Development)</h3>
+                <p className="text-sm text-muted-foreground">Major feature additions and enhancements:</p>
+                <ul className="list-disc pl-6 text-sm space-y-1">
+                  <li><strong>NEW:</strong> Subscription Aggregator with comprehensive subscription tracking</li>
+                  <li><strong>NEW:</strong> IPO Selection Dashboard with smart selection capabilities</li>
+                  <li><strong>Enhanced:</strong> GMP Aggregator with multi-source data aggregation</li>
+                  <li><strong>Enhanced:</strong> Allocation Optimizer with four distinct strategies</li>
+                  <li>Added interactive charts and visualizations using Recharts</li>
+                  <li>Improved user interface with better navigation and responsiveness</li>
+                  <li>Added real-time data refresh capabilities</li>
+                  <li>Enhanced category management with discount tracking</li>
+                </ul>
+              </div>
+
+              <div className="border-l-2 border-muted pl-4 space-y-2">
                 <h3 className="text-lg font-semibold">Version 0.0.3 (March 09, 2025)</h3>
                 <p className="text-sm text-muted-foreground">Added new features and improvements:</p>
                 <ul className="list-disc pl-6 text-sm space-y-1">
@@ -92,7 +157,7 @@ export default function DocsPage() {
                 </ul>
               </div>
 
-              <div className="border-l-2 border-primary pl-4 space-y-2">
+              <div className="border-l-2 border-muted pl-4 space-y-2">
                 <h3 className="text-lg font-semibold">Version 0.0.2 (March 09, 2025)</h3>
                 <p className="text-sm text-muted-foreground">Enhanced functionality and UI improvements:</p>
                 <ul className="list-disc pl-6 text-sm space-y-1">
@@ -107,7 +172,7 @@ export default function DocsPage() {
                 </ul>
               </div>
 
-              <div className="border-l-2 border-primary pl-4 space-y-2">
+              <div className="border-l-2 border-muted pl-4 space-y-2">
                 <h3 className="text-lg font-semibold">Version 0.0.1 (February 25, 2025)</h3>
                 <p className="text-sm text-muted-foreground">Initial release of IPO Dalal with core features:</p>
                 <ul className="list-disc pl-6 text-sm space-y-1">
@@ -132,11 +197,12 @@ export default function DocsPage() {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold">Phase 2 (Planned)</h3>
                 <ul className="list-disc pl-6 space-y-2">
+                  <li>Real-time data integration with live IPO and GMP feeds</li>
+                  <li>Database implementation to replace mock data</li>
                   <li>User accounts and personalized dashboards</li>
-                  <li>IPO Calendar with visual timeline</li>
-                  <li>GMP tracking with historical data and trends</li>
-                  <li>Advanced allocation optimization algorithms</li>
+                  <li>Advanced analytics with historical trend analysis</li>
                   <li>Email notifications for IPO events (opening, closing, allotment)</li>
+                  <li>Enhanced subscription tracking with minute-by-minute updates</li>
                 </ul>
               </div>
 
@@ -148,6 +214,7 @@ export default function DocsPage() {
                   <li>Advanced analytics and performance metrics</li>
                   <li>Community features for IPO discussions and insights</li>
                   <li>Mobile app for on-the-go IPO tracking</li>
+                  <li>Automated allocation suggestions based on market conditions</li>
                 </ul>
               </div>
 
@@ -158,6 +225,7 @@ export default function DocsPage() {
                   <li>Comprehensive company research and analysis</li>
                   <li>Integration with tax planning tools</li>
                   <li>International IPO tracking and comparison</li>
+                  <li>Advanced risk assessment models</li>
                 </ul>
               </div>
             </CardContent>
@@ -169,17 +237,56 @@ export default function DocsPage() {
           <Card>
             <CardHeader>
               <CardTitle>How to Navigate/Help Guide</CardTitle>
-              <CardDescription>Basic instructions on using the website and its features</CardDescription>
+              <CardDescription>Comprehensive instructions on using the website and its features</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold">IPO Dashboard</h3>
                 <p className="text-muted-foreground">The dashboard is your central hub for IPO information:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Use the tabs to switch between Ongoing, Upcoming, and Past IPOs</li>
+                  <li>Use the tabs to switch between Mainboard and SME IPOs</li>
                   <li>Check the market summary at the top for key market indicators</li>
                   <li>Look for "Closing Today" tags to identify IPOs that are closing for subscription</li>
+                  <li>View ongoing, upcoming, and past IPOs in separate sections</li>
                 </ul>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">GMP Aggregator</h3>
+                <p className="text-muted-foreground">To use the GMP Aggregator:</p>
+                <ol className="list-decimal pl-6 space-y-2">
+                  <li>Browse GMP data from multiple verified sources</li>
+                  <li>Check estimated listing prices and profit calculations</li>
+                  <li>Use the refresh button to get the latest GMP data</li>
+                  <li>Switch between Mainboard and SME tabs for focused analysis</li>
+                  <li>Monitor Kostak rates and Subject to Sauda prices for grey market insights</li>
+                </ol>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">Subscription Aggregator</h3>
+                <p className="text-muted-foreground">To use the Subscription Aggregator:</p>
+                <ol className="list-decimal pl-6 space-y-2">
+                  <li>View real-time subscription data across all categories</li>
+                  <li>Click on any IPO row to see detailed subscription analytics</li>
+                  <li>Analyze daily subscription patterns using interactive charts</li>
+                  <li>Monitor money inflow trends over the issue period</li>
+                  <li>Compare NSE vs BSE subscription rates</li>
+                  <li>Use the refresh button for the latest subscription data</li>
+                </ol>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold">IPO Selection Dashboard</h3>
+                <p className="text-muted-foreground">To use the IPO Selection Dashboard:</p>
+                <ol className="list-decimal pl-6 space-y-2">
+                  <li>Set your investment criteria (GMP threshold, risk tolerance)</li>
+                  <li>Use advanced filters to narrow down IPOs by sector and risk</li>
+                  <li>Click "Smart Selection" for automated IPO recommendations</li>
+                  <li>Select individual IPOs using checkboxes</li>
+                  <li>Configure applications for each category (Retail, SHNI, BHNI, etc.)</li>
+                  <li>Use the integrated controls to adjust lot quantities</li>
+                </ol>
               </div>
 
               <div className="space-y-4">
@@ -191,6 +298,7 @@ export default function DocsPage() {
                   <li>Select IPOs from the available list</li>
                   <li>For each IPO, specify the number of applications for each category</li>
                   <li>Click "Calculate" to see the detailed breakdown of your investment</li>
+                  <li>Review expected returns and allotment probabilities</li>
                 </ol>
               </div>
 
@@ -198,11 +306,20 @@ export default function DocsPage() {
                 <h3 className="text-xl font-semibold">Allocation Optimizer</h3>
                 <p className="text-muted-foreground">To use the Allocation Optimizer:</p>
                 <ol className="list-decimal pl-6 space-y-2">
-                  <li>Enter your available capital and number of accounts</li>
-                  <li>Select an allocation strategy based on your investment goals</li>
-                  <li>Use the IPO Type and IPO Status filters to narrow down your selection</li>
-                  <li>Select the IPOs you want to consider</li>
-                  <li>Click "Calculate" to get recommendations based on your selected strategy</li>
+                  <li>Enter your available capital in the top section</li>
+                  <li>Choose your allocation strategy:
+                    <ul className="list-disc pl-6 mt-2 space-y-1">
+                      <li><strong>GMP:</strong> For maximum profit potential</li>
+                      <li><strong>Subscription:</strong> For higher allotment probability</li>
+                      <li><strong>Capital:</strong> To maximize number of applications</li>
+                      <li><strong>Optimize:</strong> For balanced approach</li>
+                    </ul>
+                  </li>
+                  <li>Configure account numbers for each IPO (Retail, Shareholder, Employee)</li>
+                  <li>Use filters to select IPO types and status</li>
+                  <li>Select the IPOs you want to consider for optimization</li>
+                  <li>Click "Calculate Allocation" to get intelligent recommendations</li>
+                  <li>Review the detailed results including expected ROI and capital utilization</li>
                 </ol>
               </div>
 
@@ -216,7 +333,14 @@ export default function DocsPage() {
                   >
                     GitHub Issues
                   </Link>{" "}
-                  page to report problems or request features.
+                  page to report problems or request features. You can also follow us on{" "}
+                  <Link
+                    href="https://x.com/Sushant_Kadam73"
+                    className="text-primary hover:underline"
+                  >
+                    Twitter
+                  </Link>{" "}
+                  for updates and announcements.
                 </p>
               </div>
             </CardContent>
@@ -225,9 +349,8 @@ export default function DocsPage() {
       </Tabs>
 
       <div className="text-center text-sm text-muted-foreground">
-        <p>IPO Dalal v0.0.3 | Last Updated: March 09, 2025</p>
+        <p>IPO Dalal v0.4.0 | Last Updated: January 01, 2025</p>
       </div>
     </div>
   )
 }
-
