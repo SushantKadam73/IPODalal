@@ -7,9 +7,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
-import { RefreshCw, TrendingUp, Users, Building2, Target } from "lucide-react"
-import { mockIPOData, type IPOData } from "@/lib/mock-data"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, AreaChart, Area } from "recharts"
+import { RefreshCw, TrendingUp, Users, Building2, Target, Calculator, Clock } from "lucide-react"
+import { mockIPOData, type IPOData, mockBidDetailsData, type BidDetails } from "@/lib/mock-data"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell } from "recharts"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { formatIndianValue } from "@/lib/utils"
 
 // Enhanced subscription data interface
 interface SubscriptionData extends IPOData {
@@ -148,6 +150,57 @@ export default function SubscriptionAggregator() {
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData[]>([])
   const [lastRefresh, setLastRefresh] = useState<string>("")
   const [selectedIPO, setSelectedIPO] = useState<SubscriptionData | null>(null)
+  const [selectedBidCompany, setSelectedBidCompany] = useState<string>(mockBidDetailsData[0]?.id.toString() || "1")
+  const [selectedExchange, setSelectedExchange] = useState<"BSE" | "NSE" | "Combined">("BSE")
+
+  // Get current bid data for bid analysis
+  const currentBidData = mockBidDetailsData.find(bid => bid.id.toString() === selectedBidCompany) || mockBidDetailsData[0]
+
+  // Prepare chart data for bid analysis
+  const bidChartData = currentBidData.bidPrices.map(bid => ({
+    price: `₹${bid.price}`,
+    quantity: bid.quantity,
+    quantityInLakhs: Math.round(bid.quantity / 100000)
+  }))
+
+  // Prepare demand schedule chart data
+  const demandChartData = currentBidData.demandSchedule
+    .filter(item => !item.subcategory) // Only main categories
+    .map(item => ({
+      category: item.category.replace("Qualified Institutional Buyers (QIBs)", "QIBs")
+        .replace("Non Institutional Investors", "NIIs")
+        .replace("Retail Individual Investors (RIIs)", "RIIs"),
+      offered: item.sharesOffered,
+      bidFor: item.sharesBidFor,
+      subscription: item.subscriptionMultiple
+    }))
+
+  // Colors for pie chart
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8']
+
+  const formatCurrency = (amount: number) => {
+    if (amount >= 10000000) {
+      return `₹${(amount / 10000000).toFixed(1)}Cr`
+    } else if (amount >= 100000) {
+      return `₹${(amount / 100000).toFixed(1)}L`
+    }
+    return `₹${amount.toLocaleString('en-IN')}`
+  }
+
+  const formatNumber = (num: number) => {
+    if (num >= 10000000) {
+      return `${(num / 10000000).toFixed(1)}Cr`
+    } else if (num >= 100000) {
+      return `${(num / 100000).toFixed(1)}L`
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)}K`
+    }
+    return num.toString()
+  }
+
+  const formatQuantity = (value: number) => {
+    return formatIndianValue(value)
+  }
 
   // Initialize enhanced subscription data
   useEffect(() => {
@@ -185,26 +238,6 @@ export default function SubscriptionAggregator() {
   const totalApplications = subscriptionData.reduce((sum, ipo) => 
     sum + ipo.exchanges.consolidated.applications, 0
   )
-
-  const formatCurrency = (amount: number) => {
-    if (amount >= 10000000) {
-      return `₹${(amount / 10000000).toFixed(1)}Cr`
-    } else if (amount >= 100000) {
-      return `₹${(amount / 100000).toFixed(1)}L`
-    }
-    return `₹${amount.toLocaleString('en-IN')}`
-  }
-
-  const formatNumber = (num: number) => {
-    if (num >= 10000000) {
-      return `${(num / 10000000).toFixed(1)}Cr`
-    } else if (num >= 100000) {
-      return `${(num / 100000).toFixed(1)}L`
-    } else if (num >= 1000) {
-      return `${(num / 1000).toFixed(1)}K`
-    }
-    return num.toString()
-  }
 
   // Render IPO subscription table
   const renderSubscriptionTable = (ipos: SubscriptionData[], title: string) => (
@@ -340,211 +373,460 @@ export default function SubscriptionAggregator() {
         </p>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border border-border/40">
-          <CardContent className="p-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-blue-600" />
-                <div className="text-sm text-muted-foreground">Active IPOs</div>
-              </div>
-              <div className="text-2xl font-bold">{subscriptionData.length}</div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border border-border/40">
-          <CardContent className="p-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-green-600" />
-                <div className="text-sm text-muted-foreground">Total Bid Amount</div>
-              </div>
-              <div className="text-2xl font-bold text-green-600">
-                {formatCurrency(totalBidAmount)}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border border-border/40">
-          <CardContent className="p-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-purple-600" />
-                <div className="text-sm text-muted-foreground">Total Applications</div>
-              </div>
-              <div className="text-2xl font-bold text-purple-600">
-                {formatNumber(totalApplications)}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border border-border/40">
-          <CardContent className="p-4">
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">Last Updated</div>
-              <div className="text-sm font-medium">{lastRefresh}</div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={refreshData}
-                className="w-full text-xs"
-              >
-                <RefreshCw className="h-3 w-3 mr-1" />
-                Refresh
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Main Content */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Subscription Tables */}
-        <div className="xl:col-span-2 space-y-6">
-          <Tabs defaultValue="mainboard" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="mainboard">Mainboard IPOs</TabsTrigger>
-              <TabsTrigger value="sme">SME IPOs</TabsTrigger>
+      <Tabs defaultValue="subscription" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="subscription">Subscription Analysis</TabsTrigger>
+          <TabsTrigger value="bid-analysis">Bid Analysis</TabsTrigger>
+        </TabsList>
+
+        {/* Subscription Analysis Tab */}
+        <TabsContent value="subscription" className="space-y-6">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            {/* Subscription Tables */}
+            <div className="xl:col-span-2 space-y-6">
+              <Tabs defaultValue="mainboard" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="mainboard">Mainboard IPOs</TabsTrigger>
+                  <TabsTrigger value="sme">SME IPOs</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="mainboard" className="space-y-6">
+                  {renderSubscriptionTable(mainboardIPOs, "Mainboard IPO Subscriptions")}
+                </TabsContent>
+                
+                <TabsContent value="sme" className="space-y-6">
+                  {renderSubscriptionTable(smeIPOs, "SME IPO Subscriptions")}
+                </TabsContent>
+              </Tabs>
+            </div>
+
+            {/* Charts Section */}
+            <div className="space-y-6">
+              {selectedIPO && (
+                <>
+                  {/* IPO Selection Header */}
+                  <Card className="border border-border/40">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg">{selectedIPO.name}</CardTitle>
+                      <CardDescription>Subscription Analytics</CardDescription>
+                    </CardHeader>
+                  </Card>
+
+                  {/* Daily Subscription Pattern */}
+                  <Card className="border border-border/40">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base">Daily Subscription Pattern</CardTitle>
+                      <CardDescription>Subscription rate progression over issue period</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={200}>
+                        <LineChart data={selectedIPO.dailySubscription}>
+                          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                          <XAxis 
+                            dataKey="day" 
+                            axisLine={false}
+                            tickLine={false}
+                            className="text-xs"
+                          />
+                          <YAxis className="text-xs" />
+                          <Tooltip />
+                          <Line type="monotone" dataKey="overall" stroke="#2563eb" strokeWidth={2} />
+                          <Line type="monotone" dataKey="retail" stroke="#22c55e" strokeWidth={2} />
+                          <Line type="monotone" dataKey="qib" stroke="#a21caf" strokeWidth={2} />
+                          <Line type="monotone" dataKey="nii" stroke="#f59e42" strokeWidth={2} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+
+                  {/* Cumulative Bid Amount */}
+                  <Card className="border border-border/40">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base">Cumulative Bid Amount</CardTitle>
+                      <CardDescription>Total bid amount progression over issue period</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={200}>
+                        <AreaChart data={selectedIPO.dailySubscription}>
+                          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                          <XAxis dataKey="day" className="text-xs" />
+                          <YAxis className="text-xs" />
+                          <Tooltip />
+                          <Area type="monotone" dataKey="cumulativeBidAmount" stroke="#2563eb" fill="#2563eb33" />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+
+                  {/* Category-wise Subscription */}
+                  <Card className="border border-border/40">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base">Category-wise Subscription</CardTitle>
+                      <CardDescription>Breakdown of subscription by investor category</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={200}>
+                        <BarChart data={[
+                          { name: "QIB", value: selectedIPO.categorySubscription.qib.subscribed },
+                          { name: "SHNI", value: selectedIPO.categorySubscription.nii_shni.subscribed },
+                          { name: "BHNI", value: selectedIPO.categorySubscription.nii_bhni.subscribed },
+                          { name: "Retail", value: selectedIPO.categorySubscription.retail.subscribed },
+                          { name: "Employee", value: selectedIPO.categorySubscription.employee.subscribed },
+                          { name: "Shareholder", value: selectedIPO.categorySubscription.shareholder.subscribed },
+                        ]}>
+                          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                          <XAxis dataKey="name" className="text-xs" />
+                          <YAxis className="text-xs" />
+                          <Tooltip />
+                          <Bar dataKey="value" fill="#2563eb" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                </>
+              )}
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Bid Analysis Tab */}
+        <TabsContent value="bid-analysis" className="space-y-6">
+          {/* Company and Exchange Selection */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <Select value={selectedBidCompany} onValueChange={setSelectedBidCompany}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Company" />
+                </SelectTrigger>
+                <SelectContent>
+                  {mockBidDetailsData.map((bid) => (
+                    <SelectItem key={bid.id} value={bid.id.toString()}>
+                      {bid.companyName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex-1">
+              <Select value={selectedExchange} onValueChange={(value: "BSE" | "NSE" | "Combined") => setSelectedExchange(value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Exchange" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="BSE">BSE</SelectItem>
+                  <SelectItem value="NSE">NSE</SelectItem>
+                  <SelectItem value="Combined">Combined (NSE + BSE)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Overview Cards */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Price Band</CardTitle>
+                <Calculator className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  ₹{currentBidData.priceBand.min} - ₹{currentBidData.priceBand.max}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Cut-off: ₹{currentBidData.cutOffPrice}
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Overall Subscription</CardTitle>
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{currentBidData.overallSubscription}x</div>
+                <p className="text-xs text-muted-foreground">
+                  Total subscription rate
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Bids</CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{formatQuantity(currentBidData.totalSharesBidFor)}</div>
+                <p className="text-xs text-muted-foreground">
+                  Shares bid for
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Cut-off Bids</CardTitle>
+                <Building2 className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{formatQuantity(currentBidData.cutOffBids)}</div>
+                <p className="text-xs text-muted-foreground">
+                  At cut-off price
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Bid Analysis Content */}
+          <Tabs defaultValue="bid-details" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="bid-details">Bid Details</TabsTrigger>
+              <TabsTrigger value="demand-schedule">Demand Schedule</TabsTrigger>
+              <TabsTrigger value="charts">Visual Analysis</TabsTrigger>
             </TabsList>
-            
-            <TabsContent value="mainboard" className="space-y-6">
-              {renderSubscriptionTable(mainboardIPOs, "Mainboard IPO Subscriptions")}
-            </TabsContent>
-            
-            <TabsContent value="sme" className="space-y-6">
-              {renderSubscriptionTable(smeIPOs, "SME IPO Subscriptions")}
-            </TabsContent>
-          </Tabs>
-        </div>
 
-        {/* Charts Section */}
-        <div className="space-y-6">
-          {selectedIPO && (
-            <>
-              {/* IPO Selection Header */}
-              <Card className="border border-border/40">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">{selectedIPO.name}</CardTitle>
-                  <CardDescription>Subscription Analytics</CardDescription>
-                </CardHeader>
-              </Card>
-
-              {/* Daily Subscription Pattern */}
-              <Card className="border border-border/40">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Daily Subscription Pattern</CardTitle>
-                  <CardDescription>Subscription rate progression over issue period</CardDescription>
+            {/* Bid Details Tab */}
+            <TabsContent value="bid-details">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Bid Details ({selectedExchange})</CardTitle>
+                  <CardDescription>
+                    Price-wise bid distribution for {currentBidData.companyName}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={selectedIPO.dailySubscription}>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                      <XAxis 
-                        dataKey="day" 
-                        axisLine={false}
-                        tickLine={false}
-                        className="text-xs"
-                      />
-                      <YAxis 
-                        axisLine={false}
-                        tickLine={false}
-                        className="text-xs"
-                      />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: 'hsl(var(--card))',
-                          border: '1px solid hsl(var(--border))',
-                          borderRadius: '6px'
-                        }}
-                      />
-                      <Line type="monotone" dataKey="retail" stroke="#3b82f6" strokeWidth={2} name="Retail" />
-                      <Line type="monotone" dataKey="nii" stroke="#ef4444" strokeWidth={2} name="NII" />
-                      <Line type="monotone" dataKey="qib" stroke="#10b981" strokeWidth={2} name="QIB" />
-                      <Line type="monotone" dataKey="overall" stroke="#8b5cf6" strokeWidth={2} name="Overall" />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Price (₹)</TableHead>
+                          <TableHead>Quantity</TableHead>
+                          <TableHead>Percentage</TableHead>
+                          <TableHead>Cumulative</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {currentBidData.bidPrices.map((bid, index) => {
+                          const percentage = ((bid.quantity / currentBidData.totalSharesBidFor) * 100).toFixed(2)
+                          const cumulative = currentBidData.bidPrices
+                            .slice(0, index + 1)
+                            .reduce((sum, b) => sum + b.quantity, 0)
+                          const cumulativePercentage = ((cumulative / currentBidData.totalSharesBidFor) * 100).toFixed(2)
 
-              {/* Money Inflow Chart */}
-              <Card className="border border-border/40">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Cumulative Bid Amount</CardTitle>
-                  <CardDescription>Money inflow over time</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ResponsiveContainer width="100%" height={180}>
-                    <AreaChart data={selectedIPO.dailySubscription}>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                      <XAxis 
-                        dataKey="day" 
-                        axisLine={false}
-                        tickLine={false}
-                        className="text-xs"
-                      />
-                      <YAxis 
-                        axisLine={false}
-                        tickLine={false}
-                        className="text-xs"
-                        tickFormatter={(value) => formatCurrency(value)}
-                      />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: 'hsl(var(--card))',
-                          border: '1px solid hsl(var(--border))',
-                          borderRadius: '6px'
-                        }}
-                        formatter={(value) => [formatCurrency(Number(value)), "Bid Amount"]}
-                      />
-                      <Area 
-                        type="monotone" 
-                        dataKey="cumulativeBidAmount" 
-                        stroke="#6366f1" 
-                        fill="#6366f1" 
-                        fillOpacity={0.2}
-                        strokeWidth={2}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-
-              {/* Category Breakdown */}
-              <Card className="border border-border/40">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Category-wise Subscription</CardTitle>
-                  <CardDescription>Current subscription rates by category</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {Object.entries(selectedIPO.categorySubscription).map(([category, data]) => {
-                      if (data.subscribed === 0) return null
-                      const categoryName = category.replace('_', ' ').toUpperCase()
-                      return (
-                        <div key={category} className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="font-medium">{categoryName}</span>
-                            <span className="text-muted-foreground">{data.subscribed.toFixed(1)}x</span>
-                          </div>
-                          <Progress value={Math.min(data.subscribed * 20, 100)} className="h-2" />
-                          <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>{formatCurrency(data.bidAmount)}</span>
-                            <span>{formatNumber(data.applications)} apps</span>
-                          </div>
-                        </div>
-                      )
-                    })}
+                          return (
+                            <TableRow key={bid.price}>
+                              <TableCell className="font-medium">
+                                {bid.price === currentBidData.cutOffPrice && (
+                                  <Badge variant="secondary" className="mr-2">Cut-off</Badge>
+                                )}
+                                ₹{bid.price}
+                              </TableCell>
+                              <TableCell>{formatQuantity(bid.quantity)}</TableCell>
+                              <TableCell>{percentage}%</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  <Progress value={parseFloat(cumulativePercentage)} className="w-20" />
+                                  {cumulativePercentage}%
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })}
+                        <TableRow className="border-t-2">
+                          <TableCell className="font-bold">Cut-off Bids</TableCell>
+                          <TableCell className="font-bold">{formatQuantity(currentBidData.cutOffBids)}</TableCell>
+                          <TableCell className="font-bold">
+                            {((currentBidData.cutOffBids / currentBidData.totalSharesBidFor) * 100).toFixed(2)}%
+                          </TableCell>
+                          <TableCell>-</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
                   </div>
                 </CardContent>
               </Card>
-            </>
-          )}
-        </div>
-      </div>
+            </TabsContent>
+
+            {/* Demand Schedule Tab */}
+            <TabsContent value="demand-schedule">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Demand Schedule ({selectedExchange})</CardTitle>
+                  <CardDescription>
+                    Category-wise subscription details for {currentBidData.companyName}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Category</TableHead>
+                          <TableHead>Shares Offered/Reserved</TableHead>
+                          <TableHead>Shares Bid For</TableHead>
+                          <TableHead>Subscription Multiple</TableHead>
+                          <TableHead>Status</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {currentBidData.demandSchedule.map((item, index) => (
+                          <TableRow key={index} className={item.subcategory ? "text-sm text-muted-foreground" : ""}>
+                            <TableCell>
+                              <div className={item.subcategory ? "ml-4" : "font-medium"}>
+                                {item.subcategory ? `${item.category} (${item.subcategory})` : item.category}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {item.sharesOffered > 0 ? formatQuantity(item.sharesOffered) : "-"}
+                            </TableCell>
+                            <TableCell>{formatQuantity(item.sharesBidFor)}</TableCell>
+                            <TableCell>
+                              {item.subscriptionMultiple > 0 ? (
+                                <Badge 
+                                  variant={item.subscriptionMultiple >= 1 ? "default" : "secondary"}
+                                  className={item.subscriptionMultiple >= 1 ? "bg-green-500" : "bg-orange-500"}
+                                >
+                                  {item.subscriptionMultiple.toFixed(2)}x
+                                </Badge>
+                              ) : "-"}
+                            </TableCell>
+                            <TableCell>
+                              {item.subscriptionMultiple > 0 && (
+                                <Badge variant={item.subscriptionMultiple >= 1 ? "default" : "outline"}>
+                                  {item.subscriptionMultiple >= 1 ? "Oversubscribed" : "Undersubscribed"}
+                                </Badge>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                        <TableRow className="border-t-2 font-bold">
+                          <TableCell>Total</TableCell>
+                          <TableCell>{formatQuantity(currentBidData.totalSharesOffered)}</TableCell>
+                          <TableCell>{formatQuantity(currentBidData.totalSharesBidFor)}</TableCell>
+                          <TableCell>
+                            <Badge className="bg-blue-500">
+                              {currentBidData.overallSubscription.toFixed(2)}x
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={currentBidData.overallSubscription >= 1 ? "default" : "outline"}>
+                              {currentBidData.overallSubscription >= 1 ? "Oversubscribed" : "Undersubscribed"}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Charts Tab */}
+            <TabsContent value="charts">
+              <div className="grid gap-6 lg:grid-cols-2">
+                {/* Bid Distribution Chart */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Bid Distribution by Price</CardTitle>
+                    <CardDescription>
+                      Quantity of bids at each price level
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-80">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={bidChartData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            dataKey="price" 
+                            angle={-45}
+                            textAnchor="end"
+                            height={80}
+                          />
+                          <YAxis 
+                            tickFormatter={(value) => `${value}L`}
+                          />
+                          <Tooltip 
+                            formatter={(value: number) => [`${formatQuantity(value * 100000)}`, 'Quantity']}
+                            labelFormatter={(label) => `Price: ${label}`}
+                          />
+                          <Bar dataKey="quantityInLakhs" fill="#8884d8" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Demand Distribution Pie Chart */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Demand Distribution by Category</CardTitle>
+                    <CardDescription>
+                      Share of bids from each investor category
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-80">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={demandChartData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={({ category, percent }) => `${category}: ${(percent * 100).toFixed(1)}%`}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="bidFor"
+                          >
+                            {demandChartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value: number) => [formatQuantity(value), 'Shares Bid']} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Subscription Rate Comparison */}
+                <Card className="lg:col-span-2">
+                  <CardHeader>
+                    <CardTitle>Subscription Rate by Category</CardTitle>
+                    <CardDescription>
+                      Comparison of subscription multiples across investor categories
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-60">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={demandChartData} layout="horizontal">
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis type="number" domain={[0, 'dataMax']} />
+                          <YAxis dataKey="category" type="category" width={100} />
+                          <Tooltip 
+                            formatter={(value: number) => [`${value.toFixed(2)}x`, 'Subscription']}
+                          />
+                          <Bar dataKey="subscription" fill="#82ca9d" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          {/* Last Updated */}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            Last updated: {new Date(currentBidData.lastUpdated).toLocaleString()}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

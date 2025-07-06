@@ -720,7 +720,7 @@ export default function AllocationOptimizer() {
           <CardTitle>Allocation Strategy</CardTitle>
           <CardDescription>Enter your available capital and select a strategy for allocating across IPOs</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="grid gap-6 pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="capital">Available Capital (₹)</Label>
@@ -773,10 +773,9 @@ export default function AllocationOptimizer() {
                 </SelectContent>
               </Select>
               <p className="text-xs text-muted-foreground">
-                {selectedStrategy === "gmp" && "Prioritize IPOs with highest Grey Market Premium percentages"}
-                {selectedStrategy === "subscription" && "Focus on IPOs with lower subscription rates for better allotment chances"}
-                {selectedStrategy === "capital" && "Maximize number of applications by selecting lower-cost IPOs first"}
-                {selectedStrategy === "optimize" && "Balanced approach considering GMP, subscription rates, and capital efficiency"}
+                {selectedStrategy === "gmp"}
+                {selectedStrategy === "subscription"} 
+                {selectedStrategy === "optimize" }
               </p>
             </div>
           </div>
@@ -956,7 +955,7 @@ export default function AllocationOptimizer() {
                     
                     {/* Category Input Section */}
                     <div className="mt-4 border-t pt-4">
-                      <h4 className="text-sm font-medium mb-3">Category Applications</h4>
+
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                         {/* Retail Accounts - Always available */}
                         <div className="space-y-2">
@@ -1235,4 +1234,3 @@ export default function AllocationOptimizer() {
     </div>
   )
 }
-

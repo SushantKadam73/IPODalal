@@ -22,7 +22,6 @@ The project draws inspiration and data from various reputable sources, including
     *   IPO Premium
     *   IPO Central
     *   Chittorgarh
-    *   IPO Platform
 
 ## 2. Key Features
 
