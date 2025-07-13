@@ -27,7 +27,6 @@ interface CalculationResult {
   totalInvestment: number
   interestCost: number
   totalCost: number
-  returnedMoney: number
   totalLotsApplied: number
   sharesApplied: {
     [key: string]: number // category: shares
@@ -51,7 +50,6 @@ export default function FundingCalculator() {
   const [overallSummary, setOverallSummary] = useState<{
     totalInvestment: number
     totalInterestCost: number
-    totalReturnedMoney: number
     totalCost: number
     totalLotsApplied: number
   } | null>(null)
@@ -136,17 +134,61 @@ export default function FundingCalculator() {
     }
   };
 
+  // Get application limits based on IPO type and category
+  const getApplicationLimits = (ipo: typeof availableIPOs[0], category: string) => {
+    if (category === "shareholder" || category === "employee") {
+      return { min: 0, max: 999999 }; // These can be 0 or any amount
+    }
+
+    if (ipo.type === "Mainboard") {
+      switch (category) {
+        case "retail":
+          return { min: 0, max: 999999 };
+        case "shni":
+          // SHNI: minimum lot requirement to exceed ₹2L
+          const shniMinLots = Math.ceil(200001 / (ipo.price * ipo.lotSize));
+          return { min: 0, max: 999999, minLots: shniMinLots };
+        case "bhni":
+          // BHNI: minimum lot requirement to exceed ₹10L
+          const bhniMinLots = Math.ceil(1000001 / (ipo.price * ipo.lotSize));
+          return { min: 0, max: 999999, minLots: bhniMinLots };
+        default:
+          return { min: 0, max: 999999 };
+      }
+    } else { // SME
+      switch (category) {
+        case "retail":
+          return { min: 0, max: 999999 };
+        case "shni":
+          // SME SHNI: minimum 3 lots
+          return { min: 0, max: 999999, minLots: 3 };
+        case "bhni":
+          // SME BHNI: minimum lot requirement to exceed ₹10L
+          const smeBhniMinLots = Math.ceil(1000001 / (ipo.price * ipo.lotSize));
+          return { min: 0, max: 999999, minLots: smeBhniMinLots };
+        default:
+          return { min: 0, max: 999999 };
+      }
+    }
+  };
+
   // Update the number of applications for a category in an IPO
   const updateApplications = (ipoId: number, category: string, applications: number) => {
     ensureIpoApplicationsInitialized(ipoId);
     
-    setIpoApplications(prev => ({
-      ...prev,
-      [ipoId]: {
-        ...prev[ipoId],
-        [category]: applications
-      }
-    }));
+    const ipo = availableIPOs.find(i => i.id === ipoId);
+    if (ipo) {
+      const limits = getApplicationLimits(ipo, category);
+      const clampedApplications = Math.max(limits.min, Math.min(limits.max, applications));
+      
+      setIpoApplications(prev => ({
+        ...prev,
+        [ipoId]: {
+          ...prev[ipoId],
+          [category]: clampedApplications
+        }
+      }));
+    }
   }
 
   // Calculate lots applied based on applications for each category
@@ -155,6 +197,48 @@ export default function FundingCalculator() {
     const categoryDetail = ipo.categoryDetails[category as keyof typeof ipo.categoryDetails];
     return applications * categoryDetail.lotSize;
   }
+
+  // Validate if application meets minimum requirements for the category
+  const validateApplicationRequirements = (ipo: typeof availableIPOs[0], category: string, applications: number) => {
+    if (applications === 0) return true; // 0 is always valid (no application)
+    
+    const pricePerLot = ipo.price * ipo.lotSize;
+    const totalValue = applications * pricePerLot;
+
+    if (category === "shareholder" || category === "employee") {
+      return true; // No specific value requirements
+    }
+
+    if (ipo.type === "Mainboard") {
+      switch (category) {
+        case "retail":
+          // Retail: min 1 lot, max <₹2L
+          return applications >= 1 && totalValue < 200000;
+        case "shni":
+          // SHNI: min >₹2L, max <₹10L
+          return totalValue > 200000 && totalValue < 1000000;
+        case "bhni":
+          // BHNI: min >₹10L
+          return totalValue > 1000000;
+        default:
+          return true;
+      }
+    } else { // SME
+      switch (category) {
+        case "retail":
+          // SME Retail: exactly 2 lots
+          return applications === 2;
+        case "shni":
+          // SME SHNI: min 3 lots, max <₹10L
+          return applications >= 3 && totalValue < 1000000;
+        case "bhni":
+          // SME BHNI: min >₹10L
+          return totalValue > 1000000;
+        default:
+          return true;
+      }
+    }
+  };
 
   // Calculate results for all selected IPOs
   const calculateResults = () => {
@@ -176,7 +260,6 @@ export default function FundingCalculator() {
       const expectedLotsAllocation: { [key: string]: number } = {};
       const maxSharesAllotment: { [key: string]: number } = {};
       let totalInvestment = 0;
-      let returnedMoney = 0;
 
       Object.keys(applications).forEach((category) => {
         // Skip categories that don't apply (shareholder/employee)
@@ -184,6 +267,13 @@ export default function FundingCalculator() {
           (category === "shareholder" && !ipo.hasShareholderQuota) ||
           (category === "employee" && !ipo.hasEmployeeQuota)
         ) {
+          return;
+        }
+
+        const applicationCount = applications[category];
+        
+        // Skip if no applications
+        if (applicationCount === 0) {
           return;
         }
 
@@ -205,10 +295,6 @@ export default function FundingCalculator() {
 
           // Calculate max shares allotment
           maxSharesAllotment[category] = expectedLotsAllocation[category] * ipo.lotSize;
-
-          // Calculate returned money
-          const expectedInvestment = ipo.price * maxSharesAllotment[category];
-          returnedMoney += investment - expectedInvestment;
         } else {
           expectedLotsAllocation[category] = lots;
           maxSharesAllotment[category] = shares;
@@ -220,13 +306,12 @@ export default function FundingCalculator() {
       const interestCost = totalInvestment * dailyInterestRate * loanPeriod;
 
       // Calculate total cost
-      const totalCost = totalInvestment + interestCost - returnedMoney;
+      const totalCost = totalInvestment + interestCost;
 
       results[ipoId] = {
         totalInvestment,
         interestCost,
         totalCost,
-        returnedMoney,
         totalLotsApplied,
         sharesApplied,
         lotsApplied,
@@ -243,14 +328,12 @@ export default function FundingCalculator() {
   const calculateOverallSummary = (results: { [key: number]: CalculationResult }) => {
     const totalInvestment = Object.values(results).reduce((sum, result) => sum + result.totalInvestment, 0)
     const totalInterestCost = Object.values(results).reduce((sum, result) => sum + result.interestCost, 0)
-    const totalReturnedMoney = Object.values(results).reduce((sum, result) => sum + result.returnedMoney, 0)
-    const totalCost = totalInvestment + totalInterestCost - totalReturnedMoney
+    const totalCost = totalInvestment + totalInterestCost
     const totalLotsApplied = Object.values(results).reduce((sum, result) => sum + result.totalLotsApplied, 0)
 
     setOverallSummary({
       totalInvestment,
       totalInterestCost,
-      totalReturnedMoney,
       totalCost,
       totalLotsApplied,
     })
@@ -277,6 +360,7 @@ export default function FundingCalculator() {
 
     const typedCategory = category as keyof typeof ipo.categoryDetails;
     const categoryDetails = ipo.categoryDetails[typedCategory];
+    const limits = getApplicationLimits(ipo, category);
     
     // Check if discount property exists
     const hasDiscount = (category === "shareholder" || category === "employee") && 
@@ -306,7 +390,7 @@ export default function FundingCalculator() {
             className="h-7 w-7 rounded-r-none"
             onClick={() => {
               const currentValue = ipoApplications[ipo.id]?.[category] || 0
-              if (currentValue > 0) {
+              if (currentValue > limits.min) {
                 updateApplications(ipo.id, category, currentValue - 1)
               }
             }}
@@ -319,8 +403,8 @@ export default function FundingCalculator() {
             className="h-7 rounded-none text-center text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             value={applicationValue}
             onChange={(e) => updateApplications(ipo.id, category, Number.parseInt(e.target.value) || 0)}
-            min={0}
-            max={ipo.categoryDetails[typedCategory].maxApplications}
+            min={limits.min}
+            max={limits.max}
           />
           <Button
             type="button"
@@ -329,7 +413,7 @@ export default function FundingCalculator() {
             className="h-7 w-7 rounded-l-none"
             onClick={() => {
               const currentValue = ipoApplications[ipo.id]?.[category] || 0
-              if (currentValue < ipo.categoryDetails[typedCategory].maxApplications) {
+              if (currentValue < limits.max) {
                 updateApplications(ipo.id, category, currentValue + 1)
               }
             }}
@@ -565,44 +649,6 @@ export default function FundingCalculator() {
                           <Badge variant={ipo.status === "Current" ? "default" : "secondary"} className="text-xs">
                             {ipo.status}
                           </Badge>
-                          {ipo.hasShareholderQuota && (
-                            <Badge variant="outline" className="text-xs bg-primary/20">
-                              SH Quota
-                            </Badge>
-                          )}
-                          {ipo.hasEmployeeQuota && (
-                            <Badge variant="outline" className="text-xs bg-secondary/20">
-                              Emp Quota
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="flex flex-col gap-1 mt-2 text-xs text-muted-foreground">
-                          <div className="flex flex-wrap gap-x-4">
-                            <div>Price: {formatIndianCurrency(ipo.price)}/share</div>
-                            <div>Lot Size: {ipo.lotSize} shares</div>
-                            <div>Price per Lot: {formatIndianCurrency(ipo.price * ipo.lotSize)}</div>
-                            <div>
-                              GMP: +{ipo.gmp} ({ipo.gmpPercentage}%)
-                            </div>
-                          </div>
-                          <div className="flex flex-wrap gap-x-4">
-                            {ipo.subscriptionRate && <div>Overall: {ipo.subscriptionRate}x</div>}
-                            {ipo.categoryDetails.retail.subscriptionRate && (
-                              <div>Retail: {ipo.categoryDetails.retail.subscriptionRate}x</div>
-                            )}
-                            {ipo.categoryDetails.shni.subscriptionRate && (
-                              <div>SHNI: {ipo.categoryDetails.shni.subscriptionRate}x</div>
-                            )}
-                            {ipo.categoryDetails.bhni.subscriptionRate && (
-                              <div>BHNI: {ipo.categoryDetails.bhni.subscriptionRate}x</div>
-                            )}
-                            {ipo.hasShareholderQuota && ipo.categoryDetails.shareholder.subscriptionRate && (
-                              <div>SH: {ipo.categoryDetails.shareholder.subscriptionRate}x</div>
-                            )}
-                            {ipo.hasEmployeeQuota && ipo.categoryDetails.employee.subscriptionRate && (
-                              <div>Emp: {ipo.categoryDetails.employee.subscriptionRate}x</div>
-                            )}
-                          </div>
                         </div>
                       </div>
                       
@@ -675,14 +721,6 @@ export default function FundingCalculator() {
                 </Card>
                 <Card className="border border-border/40">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Total Returned Money</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-2xl font-bold text-primary">{formatIndianCurrency(overallSummary.totalReturnedMoney)}</p>
-                  </CardContent>
-                </Card>
-                <Card className="border border-border/40">
-                  <CardHeader className="pb-2">
                     <CardTitle className="text-sm">Total Cost</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -692,104 +730,106 @@ export default function FundingCalculator() {
               </div>
             </div>
 
-            {/* IPO-wise Results */}
-            {Object.entries(calculationResults).map(([ipoId, result]) => {
-              const ipo = availableIPOs.find((i) => i.id === Number.parseInt(ipoId))
-              if (!ipo) return null
+            {/* New Application Summary Table: Categories as rows, Companies as columns */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-foreground">Application Summary</h3>
+              <div className="overflow-x-auto">
+                <Table className="border shadow-sm">
+                  <TableHeader className="bg-primary/5">
+                    <TableRow>
+                      <TableHead className="font-semibold">Category</TableHead>
+                      {selectedIPOIds.map(ipoId => {
+                        const ipo = availableIPOs.find(i => i.id === ipoId);
+                        return (
+                          <TableHead key={ipoId} className="text-center font-semibold">
+                            {ipo?.name}
+                          </TableHead>
+                        );
+                      })}
+                      <TableHead className="text-center font-semibold bg-primary/10">Total</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {categories.map(category => {
+                      // Check if this category is applicable for any selected IPO
+                      const isApplicable = selectedIPOIds.some(ipoId => {
+                        const ipo = availableIPOs.find(i => i.id === ipoId);
+                        if (!ipo) return false;
+                        
+                        if (category.id === "shareholder" && !ipo.hasShareholderQuota) return false;
+                        if (category.id === "employee" && !ipo.hasEmployeeQuota) return false;
+                        
+                        return true;
+                      });
 
-              return (
-                <div key={ipoId} className="border-t pt-6">
-                  <h3 className="text-lg font-semibold mb-4 text-foreground">{ipo.name}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
-                    <Card className="border border-border/40">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-sm">Investment Amount</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-xl font-bold text-primary">{formatIndianCurrency(result.totalInvestment)}</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border border-border/40">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-sm">Interest Cost</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-xl font-bold text-secondary">{formatIndianCurrency(result.interestCost)}</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border border-border/40">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-sm">Returned Money</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-xl font-bold text-primary">{formatIndianCurrency(result.returnedMoney)}</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border border-border/40">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-sm">Total Lots Applied</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-xl font-bold text-primary">{result.totalLotsApplied}</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border border-border/40">
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-sm">Net Cost</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-xl font-bold text-secondary">{formatIndianCurrency(result.totalCost)}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
+                      if (!isApplicable) return null;
 
-                  <div className="overflow-x-auto">
-                    <Table className="border p-3 shadow-hard">
-                      <TableHeader className="bg-primary/5">
-                        <TableRow>
-                          <TableHead>Category</TableHead>
-                          <TableHead>Applications</TableHead>
-                          <TableHead>Lots Applied</TableHead>
-                          <TableHead>Shares Applied</TableHead>
-                          <TableHead>Investment</TableHead>
-                          <TableHead>Expected Lots Allocation</TableHead>
-                          <TableHead>Max Shares Allotment</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {categories.map((category) => {
-                          // Skip categories that don't apply (shareholder/employee)
-                          if (
-                            (category.id === "shareholder" && !ipo.hasShareholderQuota) ||
-                            (category.id === "employee" && !ipo.hasEmployeeQuota)
-                          ) {
-                            return null
-                          }
+                      let categoryTotal = 0;
 
-                          return (
-                            <TableRow key={category.id} className="hover:bg-muted/20">
-                              <TableCell className="font-medium">{category.name}</TableCell>
-                              <TableCell>{ipoApplications[ipo.id]?.[category.id] || 0}</TableCell>
-                              <TableCell>{result.lotsApplied[category.id] || 0}</TableCell>
-                              <TableCell>{result.sharesApplied[category.id] || 0}</TableCell>
-                              <TableCell className="text-primary">
-                                {formatIndianCurrency((result.sharesApplied[category.id] || 0) * ipo.price)}
+                      return (
+                        <TableRow key={category.id} className="hover:bg-muted/20">
+                          <TableCell className="font-medium">{category.name}</TableCell>
+                          {selectedIPOIds.map(ipoId => {
+                            const ipo = availableIPOs.find(i => i.id === ipoId);
+                            if (!ipo) return <TableCell key={ipoId}>-</TableCell>;
+
+                            // Check if this category applies to this IPO
+                            if (category.id === "shareholder" && !ipo.hasShareholderQuota) {
+                              return <TableCell key={ipoId} className="text-center text-muted-foreground">N/A</TableCell>;
+                            }
+                            if (category.id === "employee" && !ipo.hasEmployeeQuota) {
+                              return <TableCell key={ipoId} className="text-center text-muted-foreground">N/A</TableCell>;
+                            }
+
+                            const applications = ipoApplications[ipoId]?.[category.id] || 0;
+                            if (applications === 0) {
+                              return <TableCell key={ipoId} className="text-center text-muted-foreground">-</TableCell>;
+                            }
+
+                            const lots = calculateLotsForCategory(ipo, category.id);
+                            const amount = lots * ipo.lotSize * ipo.price;
+                            categoryTotal += amount;
+
+                            return (
+                              <TableCell key={ipoId} className="text-center">
+                                {formatIndianCurrency(amount)}
                               </TableCell>
-                              <TableCell>{result.expectedLotsAllocation[category.id] || 0}</TableCell>
-                              <TableCell>{result.maxSharesAllotment[category.id] || 0}</TableCell>
-                            </TableRow>
-                          )
-                        })}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </div>
-              )
-            })}
+                            );
+                          })}
+                          <TableCell className="text-center font-semibold bg-primary/5">
+                            {categoryTotal > 0 ? formatIndianCurrency(categoryTotal) : '-'}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                    
+                    {/* Total Row */}
+                    <TableRow className="border-t-2 bg-primary/5 font-semibold">
+                      <TableCell className="font-bold">Total</TableCell>
+                      {selectedIPOIds.map(ipoId => {
+                        const ipo = availableIPOs.find(i => i.id === ipoId);
+                        if (!ipo) return <TableCell key={ipoId}>-</TableCell>;
+
+                        const result = calculationResults[ipoId];
+                        const total = result?.totalInvestment || 0;
+
+                        return (
+                          <TableCell key={ipoId} className="text-center font-bold">
+                            {total > 0 ? formatIndianCurrency(total) : '-'}
+                          </TableCell>
+                        );
+                      })}
+                      <TableCell className="text-center font-bold bg-primary/10">
+                        {formatIndianCurrency(overallSummary.totalInvestment)}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
           </CardContent>
         </Card>
       )}
     </div>
   )
 }
-
